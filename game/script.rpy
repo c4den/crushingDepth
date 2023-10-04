@@ -22,19 +22,34 @@ label start:
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
 
-    show eileen happy
-
+    show technician happy
     # These display lines of dialogue.
+
 
     t "This is the start of Howard's Hooligan's new Ren'Py game."
 
+    
     scene bg submarine2
+    show biologist happy
 
-    b "Once you add a story, pictures, and music, you can release it to the world!"
+    b "Once they add in a story, pictures, and music, they can release it to the world!"
+
 
     scene bg submarine3
+    show admiral normal
 
-    a "So quit your lallygagging and GET TO WORK CREW!!"
+    a "The crew is hard at work to bring quality here."
+
+    show admiral angry
+    a "YOU HEAR THAT!? I DONT PAY YOU TO SIT AND LOOK CUTE! GET TO WORK!!"
+
+    b "You dont pay us, period."
+
+
+    scene bg submarine1
+    show technician happy
+
+    t "Ingore him, he's a stick in the mud. You can come back when we get more dialoge in here. Take care now."
 
     # This ends the game.
 
