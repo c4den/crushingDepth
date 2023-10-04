@@ -4,6 +4,9 @@
 # name of the character.
 
 define e = Character("Eileen")
+define t = Character("Technician", color="FF9900")
+define a = Character("Admiral", color="#244EB0")
+define b = Character("Biologist", color="#E6FF00")
 
 
 # The game starts here.
@@ -24,9 +27,11 @@ label start:
 
     # These display lines of dialogue.
 
-    e "You've created a new Ren'Py game."
+    t "This is the start of Howard's Hooligan's new Ren'Py game."
 
-    e "Once you add a story, pictures, and music, you can release it to the world!"
+    b "Once you add a story, pictures, and music, you can release it to the world!"
+
+    a "So quit your lallygagging and GET TO WORK CREW!!"
 
     # This ends the game.
 
