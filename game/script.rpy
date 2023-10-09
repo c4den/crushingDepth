@@ -16,7 +16,7 @@ label start:
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
-    scene bg submarine1
+    scene bg controlroom
 
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
@@ -49,18 +49,13 @@ label start:
             jump communication_monitor_system
     
 label door:
-
+    scene bg submarine1
     "The door is sealed shut, a symptom of the Low-Power."
 
 
 label communication_monitor_system:
-
+    scene bg submarine2
     "A low hum reverberates from the whirring fans within as the system struggles to produce even a flicker among any of the screens. "
-
-
-
-
-
 
 
 
