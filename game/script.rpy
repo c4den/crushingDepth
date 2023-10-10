@@ -8,22 +8,11 @@ define t = Character("Technician", color="FF9900")
 define a = Character("Admiral", color="#244EB0")
 define b = Character("Biologist", color="#E6FF00")
 
-
 # The game starts here.
 
 label start:
 
-    # Show a background. This uses a placeholder by default, but you can
-    # add a file (named either "bg room.png" or "bg room.jpg") to the
-    # images directory to show it.
     scene bg controlroom
-
-    # This shows a character sprite. A placeholder is used, but you can
-    # replace it by adding a file named "eileen happy.png" to the images
-    # directory.
-    # These display lines of dialogue.
-
-    # INTRO
 
     "The room jolts you off of your feet. The sound of a great crash and crushing metal fill your ears and everything goes dark."
 
@@ -57,32 +46,52 @@ label communication_monitor_system:
     scene bg submarine2
     "A low hum reverberates from the whirring fans within as the system struggles to produce even a flicker among any of the screens. "
 
+    "With what seems like a dead end, 3 monitors manage to come to light. The left monitor portrays the Captain pacing around trying to work a device in the Communications Bridge. The top middle shows the Botanist attempting to fix a steaming pipe in the Biosphere. On the right, the Quartermaster, trying but with no avail to open the door keeping him locked within."
 
+    "You can’t help but to let out a cough, which in turn echoes out on the loud intercom within the corner of your room."
+    t "'Hey Techy, is that you?'"
+    t "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you’d be able to fix it.'"
 
+    b "'Hey Teach, there’s a bit of a problem here!'"
+    b "'If I can’t get this pipe to stop from bursting, there won’t be any air left to spare on the sub for any of us.'"
 
+    a "'Not an option rookies, we all know that the power will need to be cut from one of ours just to help any of our given situations. Luckily, the power will be staying right here in the Bridge as I order it to be. I trust the Technician will make…. The right call.'"
 
-    # scene bg submarine2
-    # show biologist happy
+    "They all appear to be in a dire need of assistance, luckily you had last left the repair drone in the room you now occupy, which will make it easy to calibrate to the controls of the Monitor System. However, as the Captain deemed correct, the energy required to operate it remotely outside the room would require an ample amount of energy consumption, not that that would be an issue were you not left in such a frugal position."
 
-    # b "Once they add in a story, pictures, and music, they can release it to the world!"
+    jump decision_menu
 
+label decision_menu:
+    menu:
+        "Cut power to the Living Quarters":
+            "“I’m cutting power to the Living Quarters,” you say on the intercom."
+            t "'What!? You damn traitor! I trusted your ass and now you’re going to just leave me here? You better rethink your choices Techy!'"
+            menu:
+                "Return to deciding":
+                    jump decision_menu
+                "Cut the power":
+                    "You pull the switch, cutting power to the Living Quarters."
+                    # Additional code or dialogue for the resulting scenario can be added here.
 
-    # scene bg submarine3
-    # show admiral normal
+        "Cut power to the Biosphere":
+            "“I’m cutting power to the Biosphere,” you say on the intercom."
+            b "'Teach, you got to think logically about this one, if the Biosphere falls, everyone is going to die. This isn’t a choice that you can just make lightly. Please, I’m begging you to see reason!'"
+            menu:
+                "Return to deciding":
+                    jump decision_menu
+                "Cut the power":
+                    "You hesitantly pull the switch, cutting power to the Biosphere."
+                    # Additional code or dialogue for the resulting scenario can be added here.
 
-    # a "The crew is hard at work to bring quality here."
-
-    # show admiral angry
-    # a "YOU HEAR THAT!? I DONT PAY YOU TO SIT AND LOOK CUTE! GET TO WORK!!"
-
-    # b "You dont pay us, period."
-
-
-    # scene bg submarine1
-    # show technician happy
-
-    # t "Ingore him, he's a stick in the mud. You can come back when we get more dialoge in here. Take care now."
-
-    # This ends the game.
+        "Cut power to the Comm. Bridge":
+            "“I’m cutting power to the Command Bridge,” you say on the intercom."
+            a "'I’d take this to be treason then Technician! I’m allowing you to take back your words and do as I say. Besides, my daughter is in the room, would you be so callous to leave a child in the darkness?'"
+            menu:
+                "Return to deciding":
+                    jump decision_menu
+                "Cut the power":
+                    "With great hesitation, you pull the switch, cutting power to the Command Bridge."
+                    # Additional code or dialogue for the resulting scenario can be added here.
 
     return
+
