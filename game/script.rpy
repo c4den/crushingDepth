@@ -12,6 +12,7 @@ define b = Character("Biologist", color="#E6FF00")
 
 label start:
 
+
     scene bg controlroom
 
     "The room jolts you off of your feet. The sound of a great crash and crushing metal fill your ears and everything goes dark."
@@ -30,21 +31,26 @@ label start:
 
     "What dangers must lurk amid the crushing depth?"    
 
+label choice1:
+
     menu:
         "Try the door":
-            jump door
+            jump choice1_door
             
         "Try to turn on the Communication Monitor System":
-            jump communication_monitor_system
+            jump choice1_communication_monitor_system
     
-label door:
-    scene bg submarine1
-    "The door is sealed shut, a symptom of the Low-Power."
+    label choice1_door:
+        show bg submarine1
+        "The door is sealed shut, a symptom of the Low-Power."
+        jump choice1_done
 
+    label choice1_communication_monitor_system:
+        show bg submarine2
+        "A low hum reverberates from the whirring fans within as the system struggles to produce even a flicker among any of the screens. "
+        jump choice1_done
 
-label communication_monitor_system:
-    scene bg submarine2
-    "A low hum reverberates from the whirring fans within as the system struggles to produce even a flicker among any of the screens. "
+    label choice1_done:
 
     "With what seems like a dead end, 3 monitors manage to come to light. The left monitor portrays the Captain pacing around trying to work a device in the Communications Bridge. The top middle shows the Botanist attempting to fix a steaming pipe in the Biosphere. On the right, the Quartermaster, trying but with no avail to open the door keeping him locked within."
 
