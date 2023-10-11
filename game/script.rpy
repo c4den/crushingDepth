@@ -3,6 +3,8 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
+
+
 define e = Character("Eileen")
 define t = Character("Technician", color="FF9900")
 define a = Character("Admiral", color="#244EB0")
@@ -55,12 +57,19 @@ label choice1:
     "With what seems like a dead end, 3 monitors manage to come to light. The left monitor portrays the Captain pacing around trying to work a device in the Communications Bridge. The top middle shows the Botanist attempting to fix a steaming pipe in the Biosphere. On the right, the Quartermaster, trying but with no avail to open the door keeping him locked within."
 
     "You can’t help but to let out a cough, which in turn echoes out on the loud intercom within the corner of your room."
+    show tech normal at right
     t "'Hey Techy, is that you?'"
+
+    show tech scared at right
     t "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you’d be able to fix it.'"
 
+    show bio normal at left
     b "'Hey Teach, there’s a bit of a problem here!'"
+
+    show bio scared at left
     b "'If I can’t get this pipe to stop from bursting, there won’t be any air left to spare on the sub for any of us.'"
 
+    show admiral angry
     a "'Not an option rookies, we all know that the power will need to be cut from one of ours just to help any of our given situations. Luckily, the power will be staying right here in the Bridge as I order it to be. I trust the Technician will make…. The right call.'"
 
     "They all appear to be in a dire need of assistance, luckily you had last left the repair drone in the room you now occupy, which will make it easy to calibrate to the controls of the Monitor System. However, as the Captain deemed correct, the energy required to operate it remotely outside the room would require an ample amount of energy consumption, not that that would be an issue were you not left in such a frugal position."
