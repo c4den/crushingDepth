@@ -86,6 +86,7 @@ label decision_menu:
     menu:
         "Cut power to the Living Quarters":
             "“I’m cutting power to the Living Quarters,” you say on the intercom."
+            show tech angry at right
             t "'What!? You damn traitor! I trusted your ass and now you’re going to just leave me here? You better rethink your choices Techy!'"
             menu:
                 "Return to deciding":
