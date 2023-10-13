@@ -10,12 +10,32 @@ define t = Character("Technician", color="FF9900")
 define a = Character("Admiral", color="#244EB0")
 define b = Character("Biologist", color="#E6FF00")
 
+label inventory:
+    $ rations = 30 # Count of rations
+    $ power = 25 # % of power left out of 100
+    $ oxygen = 100 # % of oxygen left out of 100
+    return
+
+# How to access vars in inventory
+# First, write call inventory in the label if its not already there
+# Then you can access variables like below
+# "This will show the ration amount: [rations]"
+# Above will print "This will show the ration amount: 30"
+
+# call inventory
+# "This will show the ration amount: 30"
+# $ rations -= 10
+# "This will show the ration amount: 20"
+
+
+
 # The game starts here.
 
 label start:
 
 
     scene bg controlroom
+    
 
     "The room jolts you off of your feet. The sound of a great crash and crushing metal fill your ears and everything goes dark."
 
