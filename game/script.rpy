@@ -43,11 +43,11 @@ label start:
 
     "As you regain some sense of your whereabouts, the strain on your chest causes you to wheeze coughing as the air had been knocked from your lungs since the disorder began."
 
-    "You were in the Communications Room to divvy out tasks, now you’re met with blank monitors and an ear piercing alert."
+    "You were in the Communications Room to divvy out tasks, now you\’re met with blank monitors and an ear piercing alert."
 
     "\"WARNING! WARNING! LOW-POWER INSTANTIATED! WARNING!\""
 
-    "Low-power, not a good sign. Low-power puts the energy remaining at about 25\%, it’s best to use what remains wisely."
+    "Low-power, not a good sign. Low-power puts the energy remaining at about 25\%, it\’s best to use what remains wisely."
 
     "You are a technician aboard this ship, the only technician aboard this ship. Getting the power back to a mid-state is not going to be an easy task and what of the crash that knocked you out cold?"
 
@@ -80,18 +80,18 @@ label choice1:
     "The top middle shows the Botanist attempting to fix a steaming pipe in the Biosphere." 
     "On the right, the Quartermaster, trying but with no avail to open the door keeping him locked within."
 
-    "You can’t help but to let out a cough, which in turn echoes out on the loud intercom within the corner of your room."
+    "You can\’t help but to let out a cough, which in turn echoes out on the loud intercom within the corner of your room."
     show tech normal at right
     t "'Hey Techy, is that you?'"
 
     show tech scared at right
-    t "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you’d be able to fix it.'"
+    t "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you\’d be able to fix it.'"
 
     show bio normal at left
     b "'Hey Teach, there’s a bit of a problem here!'"
 
     show bio scared at left
-    b "'If I can’t get this pipe to stop from bursting, there won’t be any air left to spare on the sub for any of us.'"
+    b "'If I can’t get this pipe to stop from bursting, there won\’t be any air left to spare on the sub for any of us.'"
 
     show admiral angry
     a "'Not an option rookies, we all know that the power will need to be cut from one of ours just to help any of our given situations."
@@ -105,9 +105,9 @@ label choice1:
 label decision_menu:
     menu:
         "Cut power to the Living Quarters":
-            "“I’m cutting power to the Living Quarters,” you say on the intercom."
+            "“I\’m cutting power to the Living Quarters,” you say on the intercom."
             show tech angry at right
-            t "'What!? You damn traitor! I trusted your ass and now you’re going to just leave me here? You better rethink your choices Techy!'"
+            t "'What!? You damn traitor! I trusted your ass and now you\’re going to just leave me here? You better rethink your choices Techy!'"
             menu:
                 "Return to deciding":
                     jump decision_menu
@@ -116,8 +116,8 @@ label decision_menu:
                     # Additional code or dialogue for the resulting scenario can be added here.
 
         "Cut power to the Biosphere":
-            "“I’m cutting power to the Biosphere,” you say on the intercom."
-            b "'Teach, you got to think logically about this one, if the Biosphere falls, everyone is going to die. This isn’t a choice that you can just make lightly. Please, I’m begging you to see reason!'"
+            "“I\’m cutting power to the Biosphere,” you say on the intercom."
+            b "'Teach, you got to think logically about this one, if the Biosphere falls, everyone is going to die. This isn\’t a choice that you can just make lightly. Please, I\’m begging you to see reason!'"
             menu:
                 "Return to deciding":
                     jump decision_menu
@@ -126,8 +126,8 @@ label decision_menu:
                     # Additional code or dialogue for the resulting scenario can be added here.
 
         "Cut power to the Comm. Bridge":
-            "“I’m cutting power to the Command Bridge,” you say on the intercom."
-            a "'I’d take this to be treason then Technician! I’m allowing you to take back your words and do as I say. Besides, my daughter is in the room, would you be so callous to leave a child in the darkness?'"
+            "“I\’m cutting power to the Command Bridge,” you say on the intercom."
+            a "'I\’d take this to be treason then Technician! I\’m allowing you to take back your words and do as I say. Besides, my daughter is in the room, would you be so callous to leave a child in the darkness?'"
             menu:
                 "Return to deciding":
                     jump decision_menu
@@ -141,16 +141,16 @@ label task_menu:
             "Your drone reaches for the object, at first she seems startled but allows you to take it."
             "After some time and few tools, the toy is working again as if it were brand new."
             "She is overjoyed and thanks you graciously."
-            "You go to inspect the Comms Bridge, it is pulsing as if it’s struggling to turn on."
+            "You go to inspect the Comms Bridge, it is pulsing as if it\’s struggling to turn on."
             "The Captain sits idly by watching on as you investigate the damage."
             "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
-            "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            "However, it seems without at least mid-power, the bridge won\’t be able to carry out its intended functionality."
             return
         "Fix Pipe or Scavenge Plants for Food":
             "The Botanist backs away from his struggle to seal the leak while your drone inches near."
             "With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
             "“Eureka!” the Botanist shouts in joy."
-            "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone."
+            "Perhaps it\’s a dead end to fix the broken pipe, it\’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone."
             "Hopefully this was worth the cost."
             return
         "Fix Radio or Lifeboat":
@@ -169,8 +169,8 @@ label task_menu:
             menu:
                 "Branch 1: Restore":
                     "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
-                    "Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing"
-                    "(If the Command Bridge works): You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what’s being heard." 
+                    "Good work Technician, I knew you\’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing"
+                    "(If the Command Bridge works): You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what\’s being heard." 
                     "Leave him to his privacy"
                     "Enter room with drone Upon entering you hear words that catch your attention, “deep-sea monster”, “suicide mission”, “bomb”. These words catch your attention the most. The Captain goes berserk and shoots rounds into the Command Bridge." 
                     "“I have my daughter on board you sick bastards!” he screams in anger before sulking over, catching himself upon the edge of the console before crying and catching himself in a seat. His daughter remained startled in the far edge of the room."
