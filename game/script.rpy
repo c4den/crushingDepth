@@ -55,9 +55,9 @@ label start:
 
 label choice1:
 
-    menu:
+    menu door:
         "Try the door":
-            jump choice1
+            jump door
             
         "Try to turn on the Communication Monitor System":
             jump choice1_communication_monitor_system
