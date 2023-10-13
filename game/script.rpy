@@ -57,7 +57,7 @@ label choice1:
 
     menu:
         "Try the door":
-            jump choice1_door
+            jump choice1
             
         "Try to turn on the Communication Monitor System":
             jump choice1_communication_monitor_system
