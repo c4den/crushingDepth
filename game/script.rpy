@@ -148,7 +148,6 @@ label task_menu:
         "Restore or Deny Power":
             menu:
                 "Branch 1: Restore":
-<<<<<<< Updated upstream
                     "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
                     "Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing"
                     "(If the Command Bridge works): You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what’s being heard." 
@@ -160,17 +159,12 @@ label task_menu:
                     return
                 "Branch 2: Deny":
                     "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
-=======
                     "You decide that the power needs to be restored. The ship's systems begin to whir to life, illuminating the corridors and bringing hope to the crew."
                     return
                 "Branch 2: Deny":
                     "You decide against restoring power. It's too risky and might jeopardize the other systems further. The crew remains in the dimly lit conditions, relying on emergency lights."
->>>>>>> Stashed changes
                     return
                 "Branch 3: Delay Decision":
                     "You're not certain what the best course of action is. Perhaps you should consult with the crew or assess the damage further before making a decision."
                     return
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
