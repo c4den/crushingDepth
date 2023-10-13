@@ -55,9 +55,9 @@ label start:
 
 label choice1:
 
-    menu door:
+    menu door_choice:
         "Try the door":
-            jump door
+            jump choice1_door
             
         "Try to turn on the Communication Monitor System":
             jump choice1_communication_monitor_system
@@ -65,7 +65,7 @@ label choice1:
     label choice1_door:
         show bg submarine1
         "The door is sealed shut, a symptom of the Low-Power."
-        jump choice1_done
+        jump door_choice
 
     label choice1_communication_monitor_system:
         show bg submarine2
