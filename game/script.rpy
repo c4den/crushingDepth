@@ -114,6 +114,53 @@ label decision_menu:
                 "Cut the power":
                     "With great hesitation, you pull the switch, cutting power to the Command Bridge."
                     # Additional code or dialogue for the resulting scenario can be added here.
-
-    return
+label task_menu:
+    menu:
+        "Fix Toy or Fix Radio":
+            "As you fix you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more."
+            "Your drone reaches for the object, at first she seems startled but allows you to take it."
+            "After some time and few tools, the toy is working again as if it were brand new."
+            "She is overjoyed and thanks you graciously."
+            "You go to inspect the Comms Bridge, it is pulsing as if it’s struggling to turn on."
+            "The Captain sits idly by watching on as you investigate the damage."
+            "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
+            "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            return
+        "Fix Pipe or Scavenge Plants for Food":
+            "The Botanist backs away from his struggle to seal the leak while your drone inches near."
+            "With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
+            "“Eureka!” the Botanist shouts in joy."
+            "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone."
+            "Hopefully this was worth the cost."
+            return
+        "Fix Radio or Lifeboat":
+            "You offer to the Quartermaster to fix the radio, he stops pacing and hands it to you curiously."
+            "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat."
+            "Numerical in nature, but otherwise useless unless you decode it."
+            "You write it down in a handy note for later."
+            "“Eck! It was useless after all…” the Quartermaster scowls in disappointment."
+            "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use."
+            "Though for the state it is in, this may require some careful analysis."
+            "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override."
+            "This will allow the pod to be operated without the authorization of the AI."
+            "Good as new… sort of."
+            return
+        "Restore or Deny Power":
+            menu:
+                "Branch 1: Restore":
+                    "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
+                    "Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing"
+                    "(If the Command Bridge works): You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what’s being heard." 
+                    "Leave him to his privacy"
+                    "Enter room with drone Upon entering you hear words that catch your attention, “deep-sea monster”, “suicide mission”, “bomb”. These words catch your attention the most. The Captain goes berserk and shoots rounds into the Command Bridge." 
+                    "“I have my daughter on board you sick bastards!” he screams in anger before sulking over, catching himself upon the edge of the console before crying and catching himself in a seat. His daughter remained startled in the far edge of the room."
+                    "The Botanist speaks out loud to the monitor, “I knew you had it in you Teach!” he says pridefully."
+#(if the pipe is fixed: “Now let’s go see what is really going on out there.”) (if the pipe is broken: “I’d celebrate but I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already.” He continues to find a solution to the pipe.)
+                    return
+                "Branch 2: Deny":
+                    "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
+                    return
+                "Branch 3: Delay Decision":
+                    "You're not certain what the best course of action is. Perhaps you should consult with the crew or assess the damage further before making a decision."
+                    return
 
