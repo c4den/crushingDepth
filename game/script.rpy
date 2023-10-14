@@ -3,6 +3,26 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
+init python:
+    class Inventory():
+        def __init__(self, items, number_of_items):
+            self.items = items
+            self.number_of_items = number_of_items
+
+        def add_item(self, item):
+            self.items.append(item)
+            self.number_of_items += 1
+
+        def remove_item(self, item):
+            self.items.remove(item)
+            self.number_of_items -= 1
+
+
+    class InventoryItem():
+        def __init__(self, name):
+            self.name = name
+            
+
 init:
     # Initialize the enter_bridge variable.
     $ enter_bridge = False
@@ -14,11 +34,28 @@ init:
     $ power = 25 # % of power left out of 100
     $ oxygen = 100 # % of oxygen left out of 100
     $ fix_toy = False
+    default inventory = Inventory([], 0)
+    define repair_drone = InventoryItem("Repair Drone")
+    define sonar_device = InventoryItem("Sonar Device")
+    define deep_sea_suit = InventoryItem("Deep Sea Suit")
+    define captains_log = InventoryItem("Captain\'s Log")
+    define note = InventoryItem("Note")
+    define radio = InventoryItem("Radio")
+    define gun = InventoryItem("Gun")
+       
 
-define e = Character("Eileen")
+define p = Character("Player")
 define t = Character("Technician", color="FF9900")
 define a = Character("Admiral", color="#244EB0")
 define b = Character("Biologist", color="#E6FF00")
+
+image gun_img = "UI/gun.png"
+image repair_drone_img = "UI/repair_drone.png"
+image sonar_device_img = "UI/sonar_device.png"
+image deep_sea_suit_img = "UI/sea_suit.png"
+image captains_log_img = "UI/captains_log.png"
+image note_img = "UI/note.png"
+image radio_img = "UI/radio.png"
 
 
 label stuff:
@@ -34,9 +71,74 @@ return:
 
 label start:
 
-
     scene bg controlroom
-    
+    $ inventory.add_item(gun)
+    $ inventory.add_item(repair_drone)
+    $ inventory.add_item(sonar_device)
+    $ inventory.add_item(deep_sea_suit)
+    $ inventory.add_item(captains_log)
+    $ inventory.add_item(note)
+    $ inventory.add_item(radio)
+
+
+    # SHOW INVENTORY
+    # ============================================================
+    $ itemCount = inventory.number_of_items - 1
+    $ yPos = 0.1
+
+    while itemCount >= 0:
+        if inventory.items[itemCount].name == "Gun":
+            show gun_img:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Repair Drone":
+            show repair_drone_img:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Sonar Device":
+            show sonar_device_img:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Deep Sea Suit":
+            show deep_sea_suit:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Captain\'s Log":
+            show captains_log_img:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Note":
+            show note_img:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Radio":
+            show radio_img:
+                xalign 0.01 yalign yPos
+                xysize(100,100)
+
+        $ yPos += 0.125
+        $ itemCount -= 1
+        ""
+    # ============================================================
+
+    # HIDE INVENTORY
+    # ============================================================
+    hide gun
+    hide repair_drone
+    hide sonar_device
+    hide deep_sea_suit
+    hide captains_log
+    hide note
+    hide radio
+    # ============================================================
+
+    ""
 
     "The room jolts you off of your feet. The sound of a great crash and crushing metal fill your ears and everything goes dark."
 
