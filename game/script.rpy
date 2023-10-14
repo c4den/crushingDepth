@@ -128,13 +128,13 @@ label start:
 
     # HIDE INVENTORY
     # ============================================================
-    hide gun
-    hide repair_drone
-    hide sonar_device
-    hide deep_sea_suit
-    hide captains_log
-    hide note
-    hide radio
+    hide gun_img
+    hide repair_drone_img
+    hide sonar_device_img
+    hide deep_sea_suit_img
+    hide captains_log_img
+    hide note_img
+    hide radio_img
     # ============================================================
 
     ""
