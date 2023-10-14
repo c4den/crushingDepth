@@ -8,7 +8,8 @@ init:
     $ enter_bridge = False
     $ enter_biosphere = False
     $ enter_living_quarters = False
-
+    $ a_angry = False
+    $ qm_angry = False
 
 define e = Character("Eileen")
 define t = Character("Technician", color="FF9900")
@@ -128,6 +129,7 @@ label decision_menu:
                 "Cut the power":
                     "You pull the switch, cutting power to the Living Quarters."
                     $ cut_power_to_living_quarters = True
+                    $ qm_angry = True
                     jump branch1
         "Cut power to the Biosphere":
             "“I\’m cutting power to the Biosphere,” you say on the intercom."
@@ -151,6 +153,7 @@ label decision_menu:
                     "With great hesitation, you pull the switch, cutting power to the Command Bridge."
                     # Additional code or dialogue for the resulting scenario can be added here.
                     $ cut_power_to_command_bridge = True
+                    $ a_angry = True
                     jump branch3
 
 label branch1:
@@ -179,7 +182,10 @@ label branch1:
 
 label restore_deny_power1:
     # ... (rest of the code under this label)
-    "Whoopie"
+    menu:
+        "Restore":
+            "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
+            "“Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing."
     return
 
 label entered_bridge1:
