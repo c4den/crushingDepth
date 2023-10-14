@@ -89,37 +89,37 @@ label start:
     while itemCount >= 0:
         if inventory.items[itemCount].name == "Gun":
             show gun_img:
-                xalign xPos yalign 0.05
+                xalign xPos yalign 0.01
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Repair Drone":
             show repair_drone_img:
-                xalign xPos yalign 0.05
+                xalign xPos yalign 0.01
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Sonar Device":
             show sonar_device_img:
-                xalign xPos yalign 0.05
+                xalign xPos yalign 0.01
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Deep Sea Suit":
-            show deep_sea_suit:
-                xalign xPos yalign 0.05
-                #xysize(100,100)
+            show deep_sea_suit_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
 
         if inventory.items[itemCount].name == "Captain\'s Log":
             show captains_log_img:
-                xalign xPos yalign 0.05
+                xalign xPos yalign 0.01
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Note":
             show note_img:
-                xalign xPos yalign 0.05
+                xalign xPos yalign 0.01
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Radio":
             show radio_img:
-                xalign xPos yalign 0.05
+                xalign xPos yalign 0.01
                 xysize(100,100)
 
         $ xPos += 0.125
