@@ -10,18 +10,16 @@ init:
     $ enter_living_quarters = False
     $ a_angry = False
     $ qm_angry = False
+    $ rations = 30 # Count of rations
+    $ power = 25 # % of power left out of 100
+    $ oxygen = 100 # % of oxygen left out of 100
+    $ fix_toy = False
 
 define e = Character("Eileen")
 define t = Character("Technician", color="FF9900")
 define a = Character("Admiral", color="#244EB0")
 define b = Character("Biologist", color="#E6FF00")
 
-label inventory:
-    $ rations = 30 # Count of rations
-    $ power = 25 # % of power left out of 100
-    $ oxygen = 100 # % of oxygen left out of 100
-    $ fix_toy = False
-    return
 
 label stuff:
     $ cut_power_to_living_quarters = False
@@ -29,19 +27,6 @@ label stuff:
     $ cut_power_to_command_bridge = False
     
 return:
-
-
-
-# How to access vars in inventory
-# First, write call inventory in the label if its not already there
-# Then you can access variables like below
-# "This will show the ration amount: [rations]"
-# Above will print "This will show the ration amount: 30"
-
-# call inventory
-# "This will show the ration amount: 30"
-# $ rations -= 10
-# "This will show the ration amount: 20"
 
 
 
@@ -197,11 +182,10 @@ jump fix_choice1a
 
 label fix_choice1a:
     menu:
-        "Fix Toy. -5 Rations":
+        "Fix Toy. -5 Rations (Current rations: [rations])":
             "As you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more. Your drone reaches for the object, at first she seems startled but allows you to take it."
             "After some time and a few tools, the toy is working again as if it were brand new. She is overjoyed and thanks you graciously."
             $ fix_toy = True
-            call inventory
             $ rations -= 5
             if enter_bridge and enter_biosphere:
                     menu:
@@ -210,10 +194,9 @@ label fix_choice1a:
             else:
                 jump branch1_menu
           
-        "Fix Bridge. -5 Rations":
+        "Fix Bridge. -5 Rations (Current rations: [rations])":
             "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage. Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again. However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
             $ fix_bridge = True
-            call inventory
             $ rations -= 5
             if enter_bridge and enter_biosphere:
                     menu:
@@ -230,8 +213,7 @@ label entered_biosphere1:
 
 label fix_choice1b:
     menu:
-        "Fix Pipe. -5 Rations":
-            call inventory
+        "Fix Pipe. -5 Rations (Current rations: [rations])":
             $ rations -= 5
             "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter. \"Eureka!\" the Botanist shouts in joy."
             if enter_bridge and enter_biosphere:
@@ -241,8 +223,7 @@ label fix_choice1b:
             else:   
                 jump branch1_menu
 
-        "Scavenge Plants. +10 Rations":
-            call inventory
+        "Scavenge Plants. +10 Rations (Current rations: [rations])":
             $ rations += 10
             "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
             $ full_oxygen = False
@@ -291,11 +272,10 @@ jump fix_choice2a
 
 label fix_choice2a:
     menu:
-        "Fix Toy. -5 Rations":
+        "Fix Toy. -5 Rations (Current rations: [rations])":
             "As you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more. Your drone reaches for the object, at first she seems startled but allows you to take it."
             "After some time and a few tools, the toy is working again as if it were brand new. She is overjoyed and thanks you graciously."
             $ fix_toy = True
-            call inventory
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
                     menu:
@@ -304,12 +284,11 @@ label fix_choice2a:
             else:
                 jump branch2_menu
           
-        "Fix Bridge. -5 Rations":
+        "Fix Bridge. -5 Rations (Current rations: [rations])":
             "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage."
             "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
             "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
             $ fix_bridge = True
-            call inventory
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
                     menu:
@@ -326,11 +305,10 @@ label entered_living_quarters2:
 
 label fix_choice2b:
     menu:
-        "Fix Lifeboat. -5 Rations":
+        "Fix Lifeboat. -5 Rations (Current rations: [rations])":
             "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use. Though for the state it is in, this may require some careful analysis."
             "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override. This will allow the pod to be operated without the authorization of the AI. Good as new… sort of."
             $ fix_lifeboat = True
-            call inventory
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
                     menu:
@@ -339,10 +317,9 @@ label fix_choice2b:
             else:   
                 jump branch2_menu
 
-        "Fix Radio. -5 Rations":
+        "Fix Radio. -5 Rations (Current rations: [rations])":
             "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
             $ fix_radio = True
-            call inventory
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
                     menu:
@@ -388,11 +365,10 @@ label entered_living_quarters3:
 
 label fix_choice3a:
     menu:
-        "Fix Lifeboat. -5 Rations":
+        "Fix Lifeboat. -5 Rations (Current rations: [rations])":
             "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use. Though for the state it is in, this may require some careful analysis."
             "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override. This will allow the pod to be operated without the authorization of the AI. Good as new… sort of."
             $ fix_lifeboat = True
-            call inventory
             $ rations -= 5
             if enter_living_quarters and enter_biosphere:
                     menu:
@@ -401,10 +377,9 @@ label fix_choice3a:
             else:   
                 jump branch3_menu
 
-        "Fix Radio. -5 Rations":
+        "Fix Radio. -5 Rations (Current rations: [rations])":
             "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
             $ fix_radio = True
-            call inventory
             $ rations -= 5
             if enter_living_quarters and enter_biosphere:
                     menu:
@@ -420,7 +395,6 @@ label entered_biosphere3:
     jump fix_choice3b
 
 label fix_choice3b:
-    call inventory
     menu:
         "Fix Pipe. -5 Rations (Current rations: [rations])":
             $ rations -= 5
