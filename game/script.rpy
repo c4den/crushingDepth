@@ -238,6 +238,96 @@ label fix_choice1b:
             else:
                 jump branch1_menu
 
+label branch2:
+    if cut_power_to_biosphere:
+        menu branch2_menu: 
+            "Enter the Command Bridge":
+                if not enter_bridge:
+                    $ enter_bridge = True
+                    jump entered_bridge2
+                else:
+                    "You\'\ve already entered the Command Bridge."
+                    jump branch2
+
+            "Enter the Living Quarters":
+                if not enter_living_quarters:     
+                    $ enter_living_quarters = True
+                    jump entered_living_quarters2
+                else:
+                    "You\'\ve already entered the Living Quarters"
+                    jump branch2
+    
+    if enter_bridge and enter_living_quarters:
+        menu:
+            "Continue to power":
+                jump restore_deny_power2
+
+label restore_deny_power2:
+    # ... (rest of the code under this label)
+    "Whoopie"
+    return
+
+label entered_bridge2:
+"You enter the Command Bridge, the Captain paces back and forth, he bats an eye at the drone, but doesn’t leave much regard for it, he soon shifts to the Command Console."
+"His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
+
+"You could fix the child’s toy or the Bridge, but you won’t have the luxury to choose both, which do you decide?"
+jump fix_choice2a
+
+label fix_choice2a:
+    menu:
+        "Fix Toy. -5 Rations":
+            "As you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more. Your drone reaches for the object, at first she seems startled but allows you to take it."
+            "After some time and a few tools, the toy is working again as if it were brand new. She is overjoyed and thanks you graciously."
+            $ fix_toy = True
+            if enter_bridge and enter_living_quarters:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power2
+            else:
+                jump branch2_menu
+          
+        "Fix Bridge. -5 Rations":
+            "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage."
+            "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
+            "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            $ fix_bridge = True
+            if enter_bridge and enter_living_quarters:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power2
+            else:
+                jump branch2_menu
+
+label entered_living_quarters2:
+    "You enter the Living Quarters, the Quartermaster is still struggling to unseal the door with the wheel at its center. The Lifeboat pod is flickering with its lights, a sign of its malfunction."
+    "On the floor a radio is at a low frequency, it repeats a message over and over, but is immediately cut off before it can finish its message. Perhaps the radio will give a clue that could come handy in the future?."
+    "With the state of things, you won’t be able to repair both, which do you choose?"
+    jump fix_choice2b
+
+label fix_choice2b:
+    menu:
+        "Fix Lifeboat. -5 Rations":
+            "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use. Though for the state it is in, this may require some careful analysis."
+            "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override. This will allow the pod to be operated without the authorization of the AI. Good as new… sort of."
+            $ fix_lifeboat = True
+            if enter_bridge and enter_living_quarters:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power2
+            else:   
+                jump branch2_menu
+
+        "Fix Radio. -5 Rations":
+            "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
+            $ fix_radio = True
+            if enter_bridge and enter_living_quarters:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power2
+            else:
+                jump branch2_menu
+
 label task_menu:
     menu:
         "Fix Toy or Fix Radio":
