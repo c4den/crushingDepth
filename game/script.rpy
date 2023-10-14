@@ -16,6 +16,15 @@ label inventory:
     $ oxygen = 100 # % of oxygen left out of 100
     return
 
+label stuff:
+    $ cut_power_to_living_quarters = False
+    $ enter_bridge = False
+    $ enter_biosphere = False
+    $ fix_toy = False
+return:
+
+
+
 # How to access vars in inventory
 # First, write call inventory in the label if its not already there
 # Then you can access variables like below
@@ -101,7 +110,6 @@ label choice1:
     "However, as the Captain deemed correct, the energy required to operate it remotely outside the room would require an ample amount of energy consumption, not that that would be an issue were you not left in such a frugal position."
 
     jump decision_menu
-
 label decision_menu:
     menu:
         "Cut power to the Living Quarters":
@@ -113,8 +121,8 @@ label decision_menu:
                     jump decision_menu
                 "Cut the power":
                     "You pull the switch, cutting power to the Living Quarters."
-                    # Additional code or dialogue for the resulting scenario can be added here.
-
+                    $ cut_power_to_living_quarters = True
+                    jump branch1
         "Cut power to the Biosphere":
             "“I\’m cutting power to the Biosphere,” you say on the intercom."
             b "'Teach, you got to think logically about this one, if the Biosphere falls, everyone is going to die. This isn\’t a choice that you can just make lightly. Please, I\’m begging you to see reason!'"
@@ -124,6 +132,8 @@ label decision_menu:
                 "Cut the power":
                     "You hesitantly pull the switch, cutting power to the Biosphere."
                     # Additional code or dialogue for the resulting scenario can be added here.
+                    $ cut_power_to_biosphere = True
+                    jump branch2
 
         "Cut power to the Comm. Bridge":
             "“I\’m cutting power to the Command Bridge,” you say on the intercom."
@@ -134,6 +144,39 @@ label decision_menu:
                 "Cut the power":
                     "With great hesitation, you pull the switch, cutting power to the Command Bridge."
                     # Additional code or dialogue for the resulting scenario can be added here.
+                    $ cut_power_to_living_quarters = True
+                    jump branch3
+
+label branch1:
+    if cut_power_to_living_quarters:
+        menu branch1_menu: 
+            "Enter the Command Bridge" if enter_bridge == False:
+                $ enter_bridge = True
+                jump entered_bridge1
+
+            "Enter the Biosphere" if enter_biosphere == False:
+                $ enter_biosphere = True
+                jump entered_biosphere1
+
+label restore_deny_power1:
+    # ... (rest of the code under this label)
+label entered_biosphere1:
+    "You enter the Biosphere, the Botanist is still struggling with his pipe problem as it spews steam from its surface."
+    "Fixing the pipe might solve the oxygen problem, but the plants in the Biosphere might make up for a lot of time spent while you try to figure out how to get out of this situation."
+    "Which feels like more of a fruitful decision to you?"
+    jump fix_choice1b
+
+label fix_choice1b:
+    menu:
+        "Fix Pipe. -5 Rations":
+            "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter. \"Eureka!\" the Botanist shouts in joy."
+            jump branch1_menu
+
+        "Scavenge Plants. +10 Rations":
+            "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
+            $ full_oxygen = False
+            jump branch1_menu
+
 label task_menu:
     menu:
         "Fix Toy or Fix Radio":
