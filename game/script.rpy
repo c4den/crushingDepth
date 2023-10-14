@@ -19,13 +19,14 @@ label inventory:
     $ rations = 30 # Count of rations
     $ power = 25 # % of power left out of 100
     $ oxygen = 100 # % of oxygen left out of 100
+    $ fix_toy = False
     return
 
 label stuff:
     $ cut_power_to_living_quarters = False
+    $ cut_power_to_biosphere = False
+    $ cut_power_to_command_bridge = False
     
-    $ enter_biosphere = False
-    $ fix_toy = False
 return:
 
 
@@ -149,7 +150,7 @@ label decision_menu:
                 "Cut the power":
                     "With great hesitation, you pull the switch, cutting power to the Command Bridge."
                     # Additional code or dialogue for the resulting scenario can be added here.
-                    $ cut_power_to_living_quarters = True
+                    $ cut_power_to_command_bridge = True
                     jump branch3
 
 label branch1:
@@ -327,6 +328,91 @@ label fix_choice2b:
                             jump restore_deny_power2
             else:
                 jump branch2_menu
+
+label branch3:
+    if cut_power_to_command_bridge:
+        menu branch3_menu: 
+            "Enter the Living Quarters":
+                if not enter_living_quarters:
+                    $ enter_living_quarters = True
+                    jump entered_living_quarters3
+                else:
+                    "You\'\ve already entered the living quarters."
+                    jump branch3
+
+            "Enter the Biosphere":
+                if not enter_biosphere:     
+                    $ enter_biosphere = True
+                    jump entered_biosphere3
+                else:
+                    "You\'\ve already entered the Biosphere"
+                    jump branch3
+    
+    if enter_living_quarters and enter_biosphere:
+        menu:
+            "Continue to power":
+                jump restore_deny_power3
+
+label restore_deny_power3:
+    # ... (rest of the code under this label)
+    "Whoopie"
+    return
+
+label entered_living_quarters3:
+    "You enter the Living Quarters, the Quartermaster is still struggling to unseal the door with the wheel at its center. The Lifeboat pod is flickering with its lights, a sign of its malfunction."
+    "On the floor a radio is at a low frequency, it repeats a message over and over, but is immediately cut off before it can finish its message. Perhaps the radio will give a clue that could come handy in the future?."
+    "With the state of things, you won’t be able to repair both, which do you choose?"
+    jump fix_choice3a
+
+label fix_choice3a:
+    menu:
+        "Fix Lifeboat. -5 Rations":
+            "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use. Though for the state it is in, this may require some careful analysis."
+            "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override. This will allow the pod to be operated without the authorization of the AI. Good as new… sort of."
+            $ fix_lifeboat = True
+            if enter_living_quarters and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power3
+            else:   
+                jump branch3_menu
+
+        "Fix Radio. -5 Rations":
+            "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
+            $ fix_radio = True
+            if enter_living_quarters and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power3
+            else:
+                jump branch3_menu
+
+label entered_biosphere3:
+    "You enter the Biosphere, the Botanist is still struggling with his pipe problem as it spews steam from its surface."
+    "Fixing the pipe might solve the oxygen problem, but the plants in the Biosphere might make up for a lot of time spent while you try to figure out how to get out of this situation."
+    "Which feels like more of a fruitful decision to you?"
+    jump fix_choice3b
+
+label fix_choice3b:
+    menu:
+        "Fix Pipe. -5 Rations":
+            "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter. \"Eureka!\" the Botanist shouts in joy."
+            if enter_bridge and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power3
+            else:   
+                jump branch3_menu
+
+        "Scavenge Plants. +10 Rations":
+            "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
+            $ full_oxygen = False
+            if enter_bridge and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power3
+            else:
+                jump branch3_menu
 
 label task_menu:
     menu:
