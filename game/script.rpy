@@ -150,13 +150,15 @@ label decision_menu:
 label branch1:
     if cut_power_to_living_quarters:
         menu branch1_menu: 
-            "Enter the Command Bridge" if enter_bridge == False:
-                $ enter_bridge = True
-                jump entered_bridge1
+            "Enter the Command Bridge":
+                if not enter_bridge:
+                    $ enter_bridge = True
+                    jump entered_bridge1
 
-            "Enter the Biosphere" if enter_biosphere == False:
-                $ enter_biosphere = True
-                jump entered_biosphere1
+            "Enter the Biosphere":
+                if not enter_bioshpere:     
+                    $ enter_biosphere = True
+                    jump entered_biosphere1
 
 label restore_deny_power1:
     # ... (rest of the code under this label)
