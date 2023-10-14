@@ -154,11 +154,17 @@ label branch1:
                 if not enter_bridge:
                     $ enter_bridge = True
                     jump entered_bridge1
+                else:
+                    "You\'\ve already entered the Command Bridge."
+                    jump branch1
 
             "Enter the Biosphere":
                 if not enter_bioshpere:     
                     $ enter_biosphere = True
                     jump entered_biosphere1
+                else:
+                    "You\'\ve already entered the Biosphere"
+                    jump branch1
 
 label restore_deny_power1:
     # ... (rest of the code under this label)
