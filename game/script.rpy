@@ -6,6 +6,8 @@
 init:
     # Initialize the enter_bridge variable.
     $ enter_bridge = False
+    $ enter_biosphere = False
+    $ enter_living_quarters = False
 
 
 define e = Character("Eileen")
@@ -162,15 +164,53 @@ label branch1:
                     jump branch1
 
             "Enter the Biosphere":
-                if not enter_bioshpere:     
+                if not enter_biosphere:     
                     $ enter_biosphere = True
                     jump entered_biosphere1
                 else:
                     "You\'\ve already entered the Biosphere"
                     jump branch1
+    
+    if enter_bridge and enter_biosphere:
+        menu:
+            "Continue to power":
+                jump restore_deny_power1
 
 label restore_deny_power1:
     # ... (rest of the code under this label)
+    "Whoopie"
+    return
+
+label entered_bridge1:
+"You enter the Command Bridge, the Captain paces back and forth, he bats an eye at the drone, but doesn’t leave much regard for it, he soon shifts to the Command Console."
+"His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
+
+"You could fix the child’s toy or the Bridge, but you won’t have the luxury to choose both, which do you decide?"
+jump fix_choice1a
+
+label fix_choice1a:
+    menu:
+        "Fix Toy. -5 Rations":
+            "As you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more. Your drone reaches for the object, at first she seems startled but allows you to take it."
+            "After some time and a few tools, the toy is working again as if it were brand new. She is overjoyed and thanks you graciously."
+            $ fix_toy = True
+            if enter_bridge and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power1
+            else:
+                jump branch1_menu
+          
+        "Fix Bridge. -5 Rations":
+            "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage. Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again. However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            $ fix_bridge = True
+            if enter_bridge and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power1
+            else:
+                jump branch1_menu
+
 label entered_biosphere1:
     "You enter the Biosphere, the Botanist is still struggling with his pipe problem as it spews steam from its surface."
     "Fixing the pipe might solve the oxygen problem, but the plants in the Biosphere might make up for a lot of time spent while you try to figure out how to get out of this situation."
@@ -181,12 +221,22 @@ label fix_choice1b:
     menu:
         "Fix Pipe. -5 Rations":
             "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter. \"Eureka!\" the Botanist shouts in joy."
-            jump branch1_menu
+            if enter_bridge and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power1
+            else:   
+                jump branch1_menu
 
         "Scavenge Plants. +10 Rations":
             "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
             $ full_oxygen = False
-            jump branch1_menu
+            if enter_bridge and enter_biosphere:
+                    menu:
+                        "Continue to power":
+                            jump restore_deny_power1
+            else:
+                jump branch1_menu
 
 label task_menu:
     menu:
