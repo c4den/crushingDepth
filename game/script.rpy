@@ -84,47 +84,46 @@ label start:
     # SHOW INVENTORY
     # ============================================================
     $ itemCount = inventory.number_of_items - 1
-    $ yPos = 0.1
+    $ xPos = 0.1
 
     while itemCount >= 0:
         if inventory.items[itemCount].name == "Gun":
             show gun_img:
-                xalign 0.01 yalign yPos
+                xalign xPos yalign 0.05
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Repair Drone":
             show repair_drone_img:
-                xalign 0.01 yalign yPos
+                xalign xPos yalign 0.05
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Sonar Device":
             show sonar_device_img:
-                xalign 0.01 yalign yPos
+                xalign xPos yalign 0.05
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Deep Sea Suit":
             show deep_sea_suit:
-                xalign 0.01 yalign yPos
-                xysize(100,100)
+                xalign xPos yalign 0.05
+                #xysize(100,100)
 
         if inventory.items[itemCount].name == "Captain\'s Log":
             show captains_log_img:
-                xalign 0.01 yalign yPos
+                xalign xPos yalign 0.05
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Note":
             show note_img:
-                xalign 0.01 yalign yPos
+                xalign xPos yalign 0.05
                 xysize(100,100)
 
         if inventory.items[itemCount].name == "Radio":
             show radio_img:
-                xalign 0.01 yalign yPos
+                xalign xPos yalign 0.05
                 xysize(100,100)
 
-        $ yPos += 0.125
+        $ xPos += 0.125
         $ itemCount -= 1
-        ""
     # ============================================================
 
     # HIDE INVENTORY
