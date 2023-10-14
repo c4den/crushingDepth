@@ -3,6 +3,9 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
+init:
+    # Initialize the enter_bridge variable.
+    $ enter_bridge = False
 
 
 define e = Character("Eileen")
@@ -18,7 +21,7 @@ label inventory:
 
 label stuff:
     $ cut_power_to_living_quarters = False
-    $ enter_bridge = False
+    
     $ enter_biosphere = False
     $ fix_toy = False
 return:
