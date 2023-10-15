@@ -443,7 +443,7 @@ label restore_deny_power2:
             "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
 
             show captain happy
-            c "Good work Technician, I knew you’d be able to get things working once more."
+            a "Good work Technician, I knew you’d be able to get things working once more."
             hide captain
             "The Captain takes a long hit from his cigar before coughing."
             $ power += 25
