@@ -37,6 +37,12 @@ init:
     $ fix_bridge = False
     $ fix_pipe = False
     $ full_oxygen = True
+    $ sonar_device = False
+    $ deep_sea_suit = False
+    $ captains_log = False
+    $ note = False
+    $ radio = False
+    $ low_power = True
     default inventory = Inventory([], 0)
     define repair_drone = InventoryItem("Repair Drone")
     define sonar_device = InventoryItem("Sonar Device")
@@ -278,11 +284,11 @@ label restore_deny_power1:
             $ power += 25
             $ low_power = False
             $ med_power = True
+            "You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what’s being heard."
             if fix_bridge:
-                "You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what’s being heard."
                 menu:
                     "Enter Room with Drone":
-                        "Upon entering you hear words that catch your attention,    deep-sea monster, suicide mission, bomb. These words catch your attention the most."
+                        "Upon entering you hear words that catch your attention, deep-sea monster, suicide mission, bomb. These words catch your attention the most."
                         "The Captain goes berserk and shoots rounds into the Command Bridge. I have my daughter on board you sick bastards! he screams in anger before sulking over, catching himself upon the edge of the console before crying and catching himself in a seat."
                         "His daughter remained startled in the far edge of the room."
             "The Botanist speaks out loud to the monitor, I knew you had it in you Teach! he says pridefully."
@@ -556,7 +562,7 @@ label status_branch1:
 label menu_monitor_check1:
     menu:
         "Check Monitors":
-            if $ low_power:
+            if low_power:
                 jump monitor_branch_low1
             if not low_power:
                 jump monitor_branch_med1
@@ -593,10 +599,10 @@ label monitor_branch_med1:
     menu:
         "Check Left Monitors": 
             menu:
-                "Check Scuba Room. -5% Power":
+                "Check Scuba Room.":
                     "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
                     jump monitor_branch_med1
-                "Check Captain’s Quarters. -5% Power":
+                "Check Captain’s Quarters.":
                     if a_angry:
                         "You check the Captain’s Quarters, you see the Captain pacing around it swinging his gun in anger."
                         jump monitor_branch_med1
@@ -605,68 +611,115 @@ label monitor_branch_med1:
                         jump monitor_branch_med1
         "Check Right Monitors":
             menu: 
-                "Check Cafeteria. -5% Power":
+                "Check Cafeteria.":
                     if qm_angry:
                         "The Quartermaster seems to be thrashing some things around in the Cafeteria, it seems inaccessible for the time being."
                         jump monitor_branch_med1
                     else: 
                         "The Quartermaster doesn’t seem to be in there."
-                "Check Drone Room. -5% Power":
+                "Check Drone Room.":
                     "The Quartermaster doesn’t seem to be in there."
                     jump monitor_branch_med1
         "Search Rooms":
             jump search_rooms1
-label task_menu:
+label search_rooms1:
     menu:
-        "Fix Toy or Fix Radio":
-            "As you fix you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more."
-            "Your drone reaches for the object, at first she seems startled but allows you to take it."
-            "After some time and few tools, the toy is working again as if it were brand new."
-            "She is overjoyed and thanks you graciously."
-            "You go to inspect the Comms Bridge, it is pulsing as if it\’s struggling to turn on."
-            "The Captain sits idly by watching on as you investigate the damage."
-            "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
-            "However, it seems without at least mid-power, the bridge won\’t be able to carry out its intended functionality."
-            return
-        "Fix Pipe or Scavenge Plants for Food":
-            "The Botanist backs away from his struggle to seal the leak while your drone inches near."
-            "With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
-            "“Eureka!” the Botanist shouts in joy."
-            "Perhaps it\’s a dead end to fix the broken pipe, it\’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone."
-            "Hopefully this was worth the cost."
-            return
-        "Fix Radio or Lifeboat":
-            "You offer to the Quartermaster to fix the radio, he stops pacing and hands it to you curiously."
-            "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat."
-            "Numerical in nature, but otherwise useless unless you decode it."
-            "You write it down in a handy note for later."
-            "“Eck! It was useless after all…” the Quartermaster scowls in disappointment."
-            "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use."
-            "Though for the state it is in, this may require some careful analysis."
-            "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override."
-            "This will allow the pod to be operated without the authorization of the AI."
-            "Good as new… sort of."
-            return
-        "Restore or Deny Power":
+        "Search Captain’s Quarters":
+                "You decide to search the Captain’s Quarters, it's littered with maps and graphs attached to the walls, various notes strewn about the table." 
+                "One thing seems to catch your eye, a peculiar brown notebook with a title that reads Mission: Crushing Depth"
+                "Do you take and read it?"
+                menu:
+                    "Take and read it. -5 Rations.":
+                        $ inventory.add_item(captains_log)
+                        $ captains_log = True
+                        "Upon closer inspection of the contents, you learn that the true nature of this mission was to be a suicide mission, one where the crew is left in the dark of the details."
+                        "The Captain is to assure control of the crew and order them to arm the bomb in the armory."
+                        "The Captain's safety wasn't guaranteed either. As you read on, you snack a bit on your rations."
+                        jump search_rooms1
+                    "Cut into the Captain’s locker. -5 rations":
+                        if not full_oxygen:
+                            $ rations -= 10
+                            "You begin using your drone to cut into the Captain’s secret locker attached to the wall hoping for greater secrets and useful items."
+                            "As you cut deep into it, a blast knocks your drone back as great plumes of steam shoot from what you thought was the locker. Another compartment for the oxygen, gone." 
+                            "The low oxygen is definitely not doing you any favors in your vision."
+                            jump search_rooms1
+                    "Exit the room":
+                        "You decide it's not in your authority to read the contents of the mission and decide to look elsewhere."
+                        jump search_rooms1
+
+        "Search Scuba Room":
+            if a_angry:
+                "You go into the Scuba Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 Rations and -5% Power."
+            else:
+                "Upon entering the Scuba Suit Room, you are greeted by flickering lights. A sealed door leading to a loading dock lies on the floor. Multiple compartments are set around the room to host Deep-sea Diving Gear." 
+                "However, as you look around, you see only one suit hanging in its compartment as if there was only enough to bring one on board."
+                "Do you take the suit?"
+                menu:
+                    "Take the suit. -5 Rations":
+                        if not scuba_suit:
+                            $ scuba_suit = True
+                            "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
+                            if not full_oxygen:
+                                menu:
+                                    "Take the extra suit. -5 Rations":
+                                        "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
+                                        "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
+                                        $ rations -= 5
+                                        jump search_rooms1
+                    "Leave the Room.":
+                        "You believe it's not worth taking the suit. If there is the off chance you'd find yourself on the other side of the submersible, you find it to be quite small for the time being."
+                        jump search_rooms1
+        "Search Cafeteria":
+            "The Cafeteria is dormant and empty. What once was a place to eat and enjoy with friends is now a grim empty mess hall." 
+            "As your drone rummages through the cupboards, you find plenty of canned goods and MRE’s, this should last you for quite some time should you take the supplies."
             menu:
-                "Branch 1: Restore":
-                    "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
-                    "Good work Technician, I knew you\’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing"
-                    "(If the Command Bridge works): You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what\’s being heard." 
-                    "Leave him to his privacy"
-                    "Enter room with drone Upon entering you hear words that catch your attention, “deep-sea monster”, “suicide mission”, “bomb”. These words catch your attention the most. The Captain goes berserk and shoots rounds into the Command Bridge." 
-                    "“I have my daughter on board you sick bastards!” he screams in anger before sulking over, catching himself upon the edge of the console before crying and catching himself in a seat. His daughter remained startled in the far edge of the room."
-                    "The Botanist speaks out loud to the monitor, “I knew you had it in you Teach!” he says pridefully."
-#(if the pipe is fixed: “Now let’s go see what is really going on out there.”) (if the pipe is broken: “I’d celebrate but I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already.” He continues to find a solution to the pipe.)
-                    return
-                "Branch 2: Deny":
-                    "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
-                    "You decide that the power needs to be restored. The ship's systems begin to whir to life, illuminating the corridors and bringing hope to the crew."
-                    return
-                "Branch 2: Deny":
-                    "You decide against restoring power. It's too risky and might jeopardize the other systems further. The crew remains in the dimly lit conditions, relying on emergency lights."
-                    return
-                "Branch 3: Delay Decision":
-                    "You're not certain what the best course of action is. Perhaps you should consult with the crew or assess the damage further before making a decision."
-                    return
+                "Take 10 Rations":
+                    $ rations += 10
+                    "Not like anyone will be needing this anytime soon, these rations should allow for more time and flexibility with your options." 
+                    jump search_rooms1
+                    if not full_oxygen:
+                        menu:
+                            "Take a cake for 10 rations":
+                                $ oxygen -= 10
+                                "You begin to cut into a big cake with your drone’s tools. It’s been a while since you had something sweet to enjoy, plus it’ll be filling. To your surprise, the cake doesn’t budge…. Until it does and you realize a burst of smoke is sprung and before you is a dark pipe spewing oxygen into the air." 
+                                jump search_rooms1
+                "Leave the Food":
+                    "You decide to leave the food where it is, you anticipate that you won't be needing it in the near future."
+                    jump search_rooms1
+
+        "Search Drone Room":
+            if qm_angry:
+                "You go into the Drone Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 rations (Current rations: [rations])"
+                $ rations -= 5
+                "Heading into the Drone Room, rows of equipment lie behind metal grates and locks. Resting on the floor near the backside of the room lay a medium sized metal structure." 
+                "Various prongs jutted out from the object, this thing looked quite dangerous. You look upon the object, “ZETA-38”. Resting upon the table you notice another object, it’s round and seems to emit a yellow light." 
+                "This is a sonar device, used to attach to more navigable drones, but can very well be activated manually. Perhaps this could come in handy?"
+                menu:
+                    "Take the device":
+                        $ inventory.add_item(sonar_device)
+                        $ sonar_device = True
+                        "It glows dimly yellow, yet dormant, what use may this find you wonder? Your drone tweaks at it a bit to stay powered beyond its stationary charger and drops it into its compartment."
+                        jump search_rooms1
+                        if not full_oxygen:
+                            menu:
+                                "Take the supercharged battery. -5 Rations":
+                                    "Reaching for what seems to be an ultra-charged battery your drone is immediately zapped as you awake to your senses, realizing you just touched what was actually another drone dissected of its electrical components." 
+                                    "This feeling of low oxygen is not attributing well to your sense of decision." 
+                                    $ power -= 5
+                                    jump search_rooms1
+                        if not full_oxygen:
+                            menu:
+                                "Try to unlock the gun cabinet. -5 Rations":
+                                    "You use your drone to try to lockpick your way to a stack of guns. Perhaps it’d be useful to have some sort of weapon or at least put their components to greater use." 
+                                    "To your surprise a geyser of steaming oxygen sprays wildly as the cabinet you were trying to lockpick was just shy of your tool and you actually ended up puncturing another pipe." 
+                                    "That definitely was not worth the cost you were expecting."
+                                    $ oxygen -= 10
+                                    jump search_rooms1
+                    "Leave the Room.":
+                        "As cool as it would be to fiddle with gadgets, you have more dire things to worry about. You decide not to take the device."
+                        jump search_rooms1
+        "Change to full power mode and get off the sub":
+            jump end_determine
+
+
 
