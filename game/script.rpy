@@ -785,32 +785,23 @@ label monitor_branch_med1:
 label search_rooms1:
     menu:
         "Search Captain’s Quarters":
-                "You decide to search the Captain’s Quarters, it's littered with maps and graphs attached to the walls, various notes strewn about the table." 
-                "One thing seems to catch your eye, a peculiar brown notebook with a title that reads Mission: Crushing Depth"
-                "Do you take and read it?"
-                menu:
-                    "Take and read it. -5 rations (Current rations: [rations])":
-                        $ rations -= 5
-                        if rations == 0:
-                            jump rations_ending
-                        $ inventory.add_item(captains_log)
-                        $ captains_log = True
-                        "Upon closer inspection of the contents, you learn that the true nature of this mission was to be a suicide mission, one where the crew is left in the dark of the details."
-                        "The Captain is to assure control of the crew and order them to arm the bomb in the armory."
-                        "The Captain's safety wasn't guaranteed either. As you read on, you snack a bit on your rations."
-                        jump search_rooms1
-                    "Cut into the Captain’s locker. -5 rations (Current rations: [rations])":
-                        if not full_oxygen:
-                            $ rations -= 5
-                            if rations == 0:
-                                jump rations_ending
-                            "You begin using your drone to cut into the Captain’s secret locker attached to the wall hoping for greater secrets and useful items."
-                            "As you cut deep into it, a blast knocks your drone back as great plumes of steam shoot from what you thought was the locker. Another compartment for the oxygen, gone." 
-                            "The low oxygen is definitely not doing you any favors in your vision."
-                            jump search_rooms1
-                    "Exit the room":
-                        "You decide it's not in your authority to read the contents of the mission and decide to look elsewhere."
-                        jump search_rooms1
+            "You decide to search the Captain’s Quarters, it's littered with maps and graphs attached to the walls, various notes strewn about the table." 
+            "One thing seems to catch your eye, a peculiar brown notebook with a title that reads Mission: Crushing Depth"
+            "Do you take and read it?"
+            menu:
+                "Take and read it. -5 rations (Current rations: [rations])":
+                    $ rations -= 5
+                    if rations == 0:
+                        jump rations_ending
+                    $ inventory.add_item(captains_log)
+                    $ captains_log = True
+                    "Upon closer inspection of the contents, you learn that the true nature of this mission was to be a suicide mission, one where the crew is left in the dark of the details."
+                    "The Captain is to assure control of the crew and order them to arm the bomb in the armory."
+                    "The Captain's safety wasn't guaranteed either. As you read on, you snack a bit on your rations."
+                    jump search_rooms1
+                "Exit the room":
+                    "You decide it's not in your authority to read the contents of the mission and decide to look elsewhere."
+                    jump search_rooms1
 
         "Search Scuba Room":
             if a_angry:
@@ -821,30 +812,30 @@ label search_rooms1:
                     jump rations_ending
                 if power == 0:
                     jump power_ending
-            else:
-                "Upon entering the Scuba Suit Room, you are greeted by flickering lights. A sealed door leading to a loading dock lies on the floor. Multiple compartments are set around the room to host Deep-sea Diving Gear." 
-                "However, as you look around, you see only one suit hanging in its compartment as if there was only enough to bring one on board."
-                "Do you take the suit?"
-                menu:
-                    "Take the suit":
-                        $ inventory.add_item(deep_sea_suit)
-                        $ deep_sea_suit = True
-                        "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
-                        jump search_rooms1
-                    "Take the extra suit. -5 rations (Current rations: [rations])":
-                        $ rations -= 5
-                        if rations == 0:
-                            jump rations_ending
-                        if not full_oxygen:
-                            "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
-                            "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
-                        else:
-                            "You already have full oxygen and decide not to tamper with the locker further."
-                        jump search_rooms1
+            
+            "Upon entering the Scuba Suit Room, you are greeted by flickering lights. A sealed door leading to a loading dock lies on the floor. Multiple compartments are set around the room to host Deep-sea Diving Gear." 
+            "However, as you look around, you see only one suit hanging in its compartment as if there was only enough to bring one on board."
+            "Do you take the suit?"
+            menu:
+                "Take the suit":
+                    $ inventory.add_item(deep_sea_suit)
+                    $ deep_sea_suit = True
+                    "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
+                    jump search_rooms1
+                "Take the extra suit. -5 rations (Current rations: [rations])":
+                    $ rations -= 5
+                    if rations == 0:
+                        jump rations_ending
+                    if not full_oxygen:
+                        "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
+                        "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
+                    else:
+                        "You already have full oxygen and decide not to tamper with the locker further."
+                    jump search_rooms1
 
-                    "Leave the Room.":
-                        "You believe it's not worth taking the suit. If there is the off chance you'd find yourself on the other side of the submersible, you find it to be quite small for the time being."
-                        jump search_rooms1
+                "Leave the Room.":
+                    "You believe it's not worth taking the suit. If there is the off chance you'd find yourself on the other side of the submersible, you find it to be quite small for the time being."
+                    jump search_rooms1
         "Search Cafeteria":
             "The Cafeteria is dormant and empty. What once was a place to eat and enjoy with friends is now a grim empty mess hall." 
             "As your drone rummages through the cupboards, you find plenty of canned goods and MRE’s, this should last you for quite some time should you take the supplies."
@@ -874,40 +865,40 @@ label search_rooms1:
                 $ rations -= 5
                 $ power -= 5
                 if rations == 0:
-                        jump rations_ending
+                    jump rations_ending
                 if power == 0:
-                        jump power_ending
-                "Heading into the Drone Room, rows of equipment lie behind metal grates and locks. Resting on the floor near the backside of the room lay a medium sized metal structure." 
-                "Various prongs jutted out from the object, this thing looked quite dangerous. You look upon the object, “ZETA-38”. Resting upon the table you notice another object, it’s round and seems to emit a yellow light." 
-                "This is a sonar device, used to attach to more navigable drones, but can very well be activated manually. Perhaps this could come in handy?"
-                menu:
-                    "Take the device":
-                        $ inventory.add_item(sonar_device)
-                        $ sonar_device = True
-                        "It glows dimly yellow, yet dormant, what use may this find you wonder? Your drone tweaks at it a bit to stay powered beyond its stationary charger and drops it into its compartment."
-                        jump search_rooms1
-                        if not full_oxygen:
-                            menu:
-                                "Take the supercharged battery. -5 rations (Current power: [power])":
-                                    "Reaching for what seems to be an ultra-charged battery your drone is immediately zapped as you awake to your senses, realizing you just touched what was actually another drone dissected of its electrical components." 
-                                    "This feeling of low oxygen is not attributing well to your sense of decision." 
-                                    $ power -= 5
-                                    if power == 0:
-                                        jump power_ending
-                                    jump search_rooms1
-                        if not full_oxygen:
-                            menu:
-                                "Try to unlock the gun cabinet. -5 rations (Current oxygen: [oxygen])":
-                                    "You use your drone to try to lockpick your way to a stack of guns. Perhaps it’d be useful to have some sort of weapon or at least put their components to greater use." 
-                                    "To your surprise a geyser of steaming oxygen sprays wildly as the cabinet you were trying to lockpick was just shy of your tool and you actually ended up puncturing another pipe." 
-                                    "That definitely was not worth the cost you were expecting."
-                                    $ oxygen -= 10
-                                    if oxygen == 0:
-                                        jump oxygen_ending
-                                    jump search_rooms1
-                    "Leave the Room.":
-                        "As cool as it would be to fiddle with gadgets, you have more dire things to worry about. You decide not to take the device."
-                        jump search_rooms1
+                    jump power_ending
+            "Heading into the Drone Room, rows of equipment lie behind metal grates and locks. Resting on the floor near the backside of the room lay a medium sized metal structure." 
+            "Various prongs jutted out from the object, this thing looked quite dangerous. You look upon the object, “ZETA-38”. Resting upon the table you notice another object, it’s round and seems to emit a yellow light." 
+            "This is a sonar device, used to attach to more navigable drones, but can very well be activated manually. Perhaps this could come in handy?"
+            menu:
+                "Take the device":
+                    $ inventory.add_item(sonar_device)
+                    $ sonar_device = True
+                    "It glows dimly yellow, yet dormant, what use may this find you wonder? Your drone tweaks at it a bit to stay powered beyond its stationary charger and drops it into its compartment."
+                    jump search_rooms1
+                    if not full_oxygen:
+                        menu:
+                            "Take the supercharged battery. -5 rations (Current power: [power])":
+                                "Reaching for what seems to be an ultra-charged battery your drone is immediately zapped as you awake to your senses, realizing you just touched what was actually another drone dissected of its electrical components." 
+                                "This feeling of low oxygen is not attributing well to your sense of decision." 
+                                $ power -= 5
+                                if power == 0:
+                                    jump power_ending
+                                jump search_rooms1
+                    if not full_oxygen:
+                        menu:
+                            "Try to unlock the gun cabinet. -5 rations (Current oxygen: [oxygen])":
+                                "You use your drone to try to lockpick your way to a stack of guns. Perhaps it’d be useful to have some sort of weapon or at least put their components to greater use." 
+                                "To your surprise a geyser of steaming oxygen sprays wildly as the cabinet you were trying to lockpick was just shy of your tool and you actually ended up puncturing another pipe." 
+                                "That definitely was not worth the cost you were expecting."
+                                $ oxygen -= 10
+                                if oxygen == 0:
+                                    jump oxygen_ending
+                                jump search_rooms1
+                "Leave the Room.":
+                    "As cool as it would be to fiddle with gadgets, you have more dire things to worry about. You decide not to take the device."
+                    jump search_rooms1
         "Change to full power mode and get off the sub":
             jump end_determine
 
@@ -931,11 +922,13 @@ label ending1:
                         "As all safety procedures are met, you all journey through the deep dark." 
                         "Sighs of relief can be heard amongst you and some eager to finally go home. In a distant view a tidal wave of darkness comes quickly in front of the pod, there is no way of dodging this enigmatic wave of darkness at the rate it seems to be coming into view." 
                         "To your shock and awe, this object abrupts your new found hope destroying the pod and all those onboard. You have succumbed to the Crushing Depth."
+                        return
             else:
                 menu:
                     "Find Another Way":
                         "You attempt to make your way to the Scuba Room, even with a suit on hand there doesn’t seem to be much chance of survival with your limited knowledge of the situation." 
                         "However, you won’t have to choose as you get knocked off of your feet once more but this time you don’t feel the clamoring of a floor or wall on your back. You have succumbed to the Crushing Depth."
+return
 label ending2:
     menu:
         "Ending 2: Ascend the Deep":
@@ -947,6 +940,7 @@ label ending2:
                 "As you ascend from the depths, you feel a moment of relief as you see in the distance a pod floating away from the submarine." 
                 "You see 3 figures at its helm and you can’t help but at least feel an ounce of thankfulness that you and your crew were able to survive this hellscape of a situation."
             "Coming to the surface a large frigate sails just by you, a spotlight meets your rippling body amidst the waves and you hear calls for rescue. You have been saved. But perhaps more will perish from the monster beneath the Crushing Depth."
+return
 label ending3:
     menu:
         "Ending 3: Crushing Departure":
@@ -956,7 +950,7 @@ label ending3:
             "You reach the bomb and recite the code into its 9-digit pad. A red light and a beep follow soon after and before you know it, darkness clouds your mind."
             "There will be no monster today, not now, not ever again."
             "Mission: Crushing Depth Complete."
-
+return
 label power_ending:
 "With your carelessness everything goes dark, you stumble around waiting for a sign that the power will return, but all you hear now are the creaks of strut and metal." 
 "You soon find yourself gasping in the darkness and feel the encroaching of frost upon your skin. You have succumbed to the Crushing Depth."
