@@ -625,6 +625,8 @@ label monitor_branch_low1:
         "Check Left Monitors": 
             menu:
                 "Check Captain’s Quarters. -5\% power (Current power: [power])":
+                    if power == 0:
+                        jump power_ending
                     "You check CQ for the Captain’s presence, he doesn’t seem to be there."
                     jump monitor_branch_low1
                 "Check Scuba Room. -5\% power (Current power: [power])":
@@ -822,3 +824,13 @@ label ending3:
             "You reach the bomb and recite the code into its 9-digit pad. A red light and a beep follow soon after and before you know it, darkness clouds your mind."
             "There will be no monster today, not now, not ever again."
             "Mission: Crushing Depth Complete."
+label power_ending
+"With your carelessness everything goes dark, you stumble around waiting for a sign that the power will return, but all you hear now are the creaks of strut and metal." 
+"You soon find yourself gasping in the darkness and feel the encroaching of frost upon your skin. You have succumbed to the Crushing Depth."
+label oxygen_ending
+"You begin to feel your vision blur and you slump upon the ground gasping for more air, but it does not come to you anymore. The oxygen has begun to reach to the point of no return." 
+"You choke one last time for the respite of an air that was once there, instead you feel your mind fade into and out of darkness until you have succumbed to the Crushing Depth."
+label rations_ending
+"Your stomach aches in every manner, you begin to lose sight of your main objective, it’s replaced by the under satiating sensation of starvation." 
+"Whatever you may do to survive past this point doesn’t earn you the time or resources you need to stay alive long enough to find your way off of the ship." 
+"With grim dismay and a yearning for sustenance of any kind, your world fades before you and you soon after succumb to the Crushing Depth."
