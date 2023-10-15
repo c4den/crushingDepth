@@ -304,7 +304,7 @@ label restore_deny_power1:
             "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
             
             show captain happy
-            c "Good work Technician, I knew you’d be able to get things working once more."
+            a "Good work Technician, I knew you’d be able to get things working once more."
             hide captain
             "The Captain takes a long hit from his cigar before coughing."
         
@@ -316,9 +316,17 @@ label restore_deny_power1:
                 menu:
                     "Enter Room with Drone":
                         "Upon entering you hear words that catch your attention, deep-sea monster, suicide mission, bomb. These words catch your attention the most."
-                        "The Captain goes berserk and shoots rounds into the Command Bridge. I have my daughter on board you sick bastards! he screams in anger before sulking over, catching himself upon the edge of the console before crying and catching himself in a seat."
+                        "The Captain goes berserk and shoots rounds into the Command Bridge."
+                        show captain angry
+                        a "I have my daughter on board you sick bastards!"
+                        "he then starts to sulk over, catching himself upon the edge of the console before crying and catching himself in a seat."
                         "His daughter remained startled in the far edge of the room."
-            "The Botanist speaks out loud to the monitor, I knew you had it in you Teach! he says pridefully."
+                        hide captain
+            "The Botanist speaks out loud to the monitor"
+            show botanist normal
+            b "I knew you had it in you Teach!"
+            "he said that with so much pride"
+            hide botanist
             if fix_pipe:
                 "Now let’s go see what is really going on out there."
             if not full_oxygen:
@@ -365,6 +373,7 @@ label fix_choice1a:
             "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage." 
             "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
             "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            hide captain
             $ fix_bridge = True
             $ rations -= 5
             if enter_bridge and enter_biosphere:
@@ -499,6 +508,7 @@ label fix_choice2a:
             "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage."
             "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
             "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            hide captain
             $ fix_bridge = True
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
@@ -686,6 +696,7 @@ label status_branch1:
 label menu_monitor_check1:
     menu:
         "Check Monitors":
+            show bg controlroom
             if low_power:
                 jump monitor_branch_low1
             if not low_power:
@@ -693,8 +704,6 @@ label menu_monitor_check1:
         "Search Rooms":
             jump search_rooms1
 label monitor_branch_low1:
-
-    show bg controlroom
 
     menu:
         "Check Left Monitors": 
@@ -861,7 +870,7 @@ label search_rooms1:
 
         "Search Drone Room":
             if qm_angry:
-                "You go into the Drone Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 rations and -5\% power)"
+                "You go into the Drone Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. (-5 rations and -5\% power)"
                 $ rations -= 5
                 $ power -= 5
                 if rations == 0:
@@ -916,7 +925,8 @@ label ending1:
             "You don’t feel so much at ease, trial and tribulation has led you with not much to go off of or to go on for that matter. There doesn’t seem to be an easy way off this ship."
             if fix_lifeboat:
                 menu:
-                    "Take Lifeboat":
+                    "Take Lifeboat":                        
+                        show bg ending1lifeboat                        
                         "The Lifeboat pod seems like your best bet, everyone lines up to join you and are prepared for whatever may come next." 
                         "As all safety procedures are met, you all journey through the deep dark." 
                         "Sighs of relief can be heard amongst you and some eager to finally go home. In a distant view a tidal wave of darkness comes quickly in front of the pod, there is no way of dodging this enigmatic wave of darkness at the rate it seems to be coming into view." 
@@ -946,6 +956,7 @@ label ending3:
             "You reach the bomb and recite the code into its 9-digit pad. A red light and a beep follow soon after and before you know it, darkness clouds your mind."
             "There will be no monster today, not now, not ever again."
             "Mission: Crushing Depth Complete."
+
 label power_ending:
 "With your carelessness everything goes dark, you stumble around waiting for a sign that the power will return, but all you hear now are the creaks of strut and metal." 
 "You soon find yourself gasping in the darkness and feel the encroaching of frost upon your skin. You have succumbed to the Crushing Depth."
