@@ -719,7 +719,7 @@ label search_rooms1:
                     "Cut into the Captain’s locker. -5 rations (Current rations: [rations])":
                         if not full_oxygen:
                             $ rations -= 5
-                            if rations = 0:
+                            if rations == 0:
                                 jump rations_ending
                             "You begin using your drone to cut into the Captain’s secret locker attached to the wall hoping for greater secrets and useful items."
                             "As you cut deep into it, a blast knocks your drone back as great plumes of steam shoot from what you thought was the locker. Another compartment for the oxygen, gone." 
@@ -749,13 +749,16 @@ label search_rooms1:
                         "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
                         jump search_rooms1
                     "Take the extra suit. -5 rations (Current rations: [rations])":
+                        $ rations -= 5
+                        if rations == 0:
+                            jump rations_ending
                         if not full_oxygen:
                             "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
                             "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
-                            $ rations -= 5
-                            if rations == 0:
-                                jump rations_ending
-                            jump search_rooms1
+                        else:
+                            "You already have full oxygen and decide not to tamper with the locker further."
+                        jump search_rooms1
+
                     "Leave the Room.":
                         "You believe it's not worth taking the suit. If there is the off chance you'd find yourself on the other side of the submersible, you find it to be quite small for the time being."
                         jump search_rooms1
