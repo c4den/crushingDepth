@@ -624,10 +624,10 @@ label monitor_branch_low1:
     menu:
         "Check Left Monitors": 
             menu:
-                "Check Captain’s Quarters. -5% power (Current power: [power])":
+                "Check Captain’s Quarters. -5\% power (Current power: [power])":
                     "You check CQ for the Captain’s presence, he doesn’t seem to be there."
                     jump monitor_branch_low1
-                "Check Scuba Room. -5% power (Current power: [power])":
+                "Check Scuba Room. -5\% power (Current power: [power])":
                     if a_angry:
                         "You check the Scuba Room, you see the Captain pacing around it swinging his gun in anger."
                         jump monitor_branch_low1
@@ -636,52 +636,25 @@ label monitor_branch_low1:
                         jump monitor_branch_low1
         "Check Right Monitors":
             menu: 
-                "Check Drone Room. -5% power (Current power: [power])":
+                "Check Drone Room. -5\% power (Current power: [power])":
                     if qm_angry:
                         "The Quartermaster seems to be thrashing some things around in the Drone Room, it seems inaccessible for the time being."
                         jump monitor_branch_low1
                     else: 
                         "The Quartermaster doesn’t seem to be in there."
-                "Check Cafeteria. -5% power (Current power: [power])":
+                "Check Cafeteria. -5\% power (Current power: [power])":
                     "The Quartermaster doesn’t seem to be in there."
                     jump monitor_branch_low1
-        "Search Rooms":
-            jump search_rooms1
-label monitor_branch_low2:
-    menu:
-        "Check Left Monitors": 
-            menu:
-                "Check Captain’s Quarters. -5% power (Current power: [power])":
-                    "You check CQ for the Captain’s presence, he doesn’t seem to be there."
-                    jump monitor_branch_low2
-                "Check Scuba Room. -5% power (Current power: [power])":
-                    if a_angry:
-                        "You check the Scuba Room, you see the Captain pacing around it swinging his gun in anger."
-                        jump monitor_branch_low2
-                    else:
-                        "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
-                        jump monitor_branch_low2
-        "Check Right Monitors":
-            menu: 
-                "Check Drone Room. -5% power (Current power: [power])":
-                    if qm_angry:
-                        "The Quartermaster seems to be thrashing some things around in the Drone Room, it seems inaccessible for the time being."
-                        jump monitor_branch_low2
-                    else: 
-                        "The Quartermaster doesn’t seem to be in there."
-                "Check Cafeteria. -5% power (Current power: [power])":
-                    "The Quartermaster doesn’t seem to be in there."
-                    jump monitor_branch_low2
         "Search Rooms":
             jump search_rooms1
 label monitor_branch_med1:
     menu:
         "Check Left Monitors": 
             menu:
-                "Check Scuba Room.":
+                "Check Scuba Room. -5\% power (Current power: [power])":
                     "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
                     jump monitor_branch_med1
-                "Check Captain’s Quarters.":
+                "Check Captain’s Quarters. -5\% power (Current power: [power])":
                     if a_angry:
                         "You check the Captain’s Quarters, you see the Captain pacing around it swinging his gun in anger."
                         jump monitor_branch_med1
@@ -690,13 +663,13 @@ label monitor_branch_med1:
                         jump monitor_branch_med1
         "Check Right Monitors":
             menu: 
-                "Check Cafeteria.":
+                "Check Cafeteria. -5\% power (Current power: [power])":
                     if qm_angry:
                         "The Quartermaster seems to be thrashing some things around in the Cafeteria, it seems inaccessible for the time being."
                         jump monitor_branch_med1
                     else: 
                         "The Quartermaster doesn’t seem to be in there."
-                "Check Drone Room.":
+                "Check Drone Room. -5\% power (Current power: [power])":
                     "The Quartermaster doesn’t seem to be in there."
                     jump monitor_branch_med1
         "Search Rooms":
@@ -728,7 +701,9 @@ label search_rooms1:
 
         "Search Scuba Room":
             if a_angry:
-                "You go into the Scuba Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 Rations and -5% Power."
+                "You go into the Scuba Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 Rations and -5\% power."
+                $ rations -= 5
+                $ power -= 5
             else:
                 "Upon entering the Scuba Suit Room, you are greeted by flickering lights. A sealed door leading to a loading dock lies on the floor. Multiple compartments are set around the room to host Deep-sea Diving Gear." 
                 "However, as you look around, you see only one suit hanging in its compartment as if there was only enough to bring one on board."
@@ -771,8 +746,9 @@ label search_rooms1:
 
         "Search Drone Room":
             if qm_angry:
-                "You go into the Drone Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 rations (Current rations: [rations])"
+                "You go into the Drone Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. -5 rations and -5\% power)"
                 $ rations -= 5
+                $ power -= 5
                 "Heading into the Drone Room, rows of equipment lie behind metal grates and locks. Resting on the floor near the backside of the room lay a medium sized metal structure." 
                 "Various prongs jutted out from the object, this thing looked quite dangerous. You look upon the object, “ZETA-38”. Resting upon the table you notice another object, it’s round and seems to emit a yellow light." 
                 "This is a sonar device, used to attach to more navigable drones, but can very well be activated manually. Perhaps this could come in handy?"
