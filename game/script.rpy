@@ -595,7 +595,7 @@ label fix_choice3b:
             "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
             $ full_oxygen = False
             $ rations += 10
-            if enter_bridge and enter_biosphere:
+            if enter_living_quarters and enter_biosphere:
                     menu:
                         "Continue to power":
                             jump restore_deny_power3
