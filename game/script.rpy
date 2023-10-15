@@ -34,6 +34,9 @@ init:
     $ power = 25 # % of power left out of 100
     $ oxygen = 100 # % of oxygen left out of 100
     $ fix_toy = False
+    $ fix_bridge = False
+    $ fix_pipe = False
+    $ full_oxygen = True
     default inventory = Inventory([], 0)
     define repair_drone = InventoryItem("Repair Drone")
     define sonar_device = InventoryItem("Sonar Device")
@@ -272,8 +275,32 @@ label restore_deny_power1:
         "Restore":
             "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
             "“Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing."
-    return
-
+            $ power += 25
+            $ low_power = False
+            $ med_power = True
+            if fix_bridge:
+                "You notice the Captain goes to respond to something coming from the Command Bridge, however there is interference through the monitors for you to be able to tell what’s being heard."
+                menu:
+                    "Enter Room with Drone":
+                        "Upon entering you hear words that catch your attention,    deep-sea monster, suicide mission, bomb. These words catch your attention the most."
+                        "The Captain goes berserk and shoots rounds into the Command Bridge. I have my daughter on board you sick bastards! he screams in anger before sulking over, catching himself upon the edge of the console before crying and catching himself in a seat."
+                        "His daughter remained startled in the far edge of the room."
+            "The Botanist speaks out loud to the monitor, I knew you had it in you Teach! he says pridefully."
+            if fix_pipe:
+                "Now let’s go see what is really going on out there."
+            if not full_oxygen:
+                "I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already. He continues to find a solution to the pipe."
+                jump status_branch1
+        "Deny":
+            $ a_angry = True
+            "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
+            "You traitor! I ordered you to turn things on to mid-power!” The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
+            "The Botanist looks around and sighs, “Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose.” He nods in agreement."
+            if fix_pipe:
+                "Now let’s go see what is really going on out there."
+            if not full_oxygen:
+                "I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already. He continues to find a solution to the pipe."
+                jump status_branch1
 label entered_bridge1:
 "You enter the Command Bridge, the Captain paces back and forth, he bats an eye at the drone, but doesn’t leave much regard for it, he soon shifts to the Command Console."
 "His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
@@ -517,7 +544,78 @@ label fix_choice3b:
                             jump restore_deny_power3
             else:
                 jump branch3_menu
-
+label status_branch1:
+    "Now that you have made a firm decision on the state of the power, you decide it\’\s time to give more exploration to the other rooms and what they may offer to you in helping you get off this doomed submersible."
+    "On the left side of the submarine towards the Command Bridge is the Captain\’\s Quarters and the Scuba Room."
+    "On the right side towards the Living Quarters is the Drone Room and Cafeteria."
+    if fix_toy:
+        $ a_angry = False
+    else:
+        "With the Captain on the move he could be anywhere, it’s best to find out where he’s not."
+        jump menu_monitor_check1
+label menu_monitor_check1:
+    menu:
+        "Check Monitors":
+            if $ low_power:
+                jump monitor_branch_low1
+            if not low_power:
+                jump monitor_branch_med1
+        "Search Rooms":
+            jump search_rooms1
+label monitor_branch_low1:
+    menu:
+        "Check Left Monitors": 
+            menu:
+                "Check Captain’s Quarters. -5% Power":
+                    "You check CQ for the Captain’s presence, he doesn’t seem to be there."
+                    jump monitor_branch_low1
+                "Check Scuba Room. -5% Power":
+                    if a_angry:
+                        "You check the Scuba Room, you see the Captain pacing around it swinging his gun in anger."
+                        jump monitor_branch_low1
+                    else:
+                        "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
+                        jump monitor_branch_low1
+        "Check Right Monitors":
+            menu: 
+                "Check Drone Room. -5% Power":
+                    if qm_angry:
+                        "The Quartermaster seems to be thrashing some things around in the Drone Room, it seems inaccessible for the time being."
+                        jump monitor_branch_low1
+                    else: 
+                        "The Quartermaster doesn’t seem to be in there."
+                "Check Cafeteria. -5% Power":
+                    "The Quartermaster doesn’t seem to be in there."
+                    jump monitor_branch_low1
+        "Search Rooms":
+            jump search_rooms1
+label monitor_branch_med1:
+    menu:
+        "Check Left Monitors": 
+            menu:
+                "Check Scuba Room. -5% Power":
+                    "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
+                    jump monitor_branch_med1
+                "Check Captain’s Quarters. -5% Power":
+                    if a_angry:
+                        "You check the Captain’s Quarters, you see the Captain pacing around it swinging his gun in anger."
+                        jump monitor_branch_med1
+                    else:
+                        "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
+                        jump monitor_branch_med1
+        "Check Right Monitors":
+            menu: 
+                "Check Cafeteria. -5% Power":
+                    if qm_angry:
+                        "The Quartermaster seems to be thrashing some things around in the Cafeteria, it seems inaccessible for the time being."
+                        jump monitor_branch_med1
+                    else: 
+                        "The Quartermaster doesn’t seem to be in there."
+                "Check Drone Room. -5% Power":
+                    "The Quartermaster doesn’t seem to be in there."
+                    jump monitor_branch_med1
+        "Search Rooms":
+            jump search_rooms1
 label task_menu:
     menu:
         "Fix Toy or Fix Radio":
