@@ -36,6 +36,7 @@ init:
     $ fix_toy = False
     $ fix_bridge = False
     $ fix_pipe = False
+    $ fix_lifeboat = False
     $ full_oxygen = True
     $ sonar_device = False
     $ deep_sea_suit = False
@@ -43,6 +44,7 @@ init:
     $ note = False
     $ radio = False
     $ low_power = True
+    $ depleted_rations = False
     default inventory = Inventory([], 0)
     define repair_drone = InventoryItem("Repair Drone")
     define sonar_device = InventoryItem("Sonar Device")
@@ -329,7 +331,8 @@ label fix_choice1a:
                 jump branch1_menu
           
         "Fix Bridge. -5 Rations (Current rations: [rations])":
-            "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage. Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again. However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage." 
+            "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again. However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
             $ fix_bridge = True
             $ rations -= 5
             if enter_bridge and enter_biosphere:
@@ -572,10 +575,10 @@ label monitor_branch_low1:
     menu:
         "Check Left Monitors": 
             menu:
-                "Check Captain’s Quarters. -5% Power":
+                "Check Captain’s Quarters. -5% power (Current power: [power])":
                     "You check CQ for the Captain’s presence, he doesn’t seem to be there."
                     jump monitor_branch_low1
-                "Check Scuba Room. -5% Power":
+                "Check Scuba Room. -5% power (Current power: [power])":
                     if a_angry:
                         "You check the Scuba Room, you see the Captain pacing around it swinging his gun in anger."
                         jump monitor_branch_low1
@@ -584,13 +587,13 @@ label monitor_branch_low1:
                         jump monitor_branch_low1
         "Check Right Monitors":
             menu: 
-                "Check Drone Room. -5% Power":
+                "Check Drone Room. -5% power (Current power: [power])":
                     if qm_angry:
                         "The Quartermaster seems to be thrashing some things around in the Drone Room, it seems inaccessible for the time being."
                         jump monitor_branch_low1
                     else: 
                         "The Quartermaster doesn’t seem to be in there."
-                "Check Cafeteria. -5% Power":
+                "Check Cafeteria. -5% power (Current power: [power])":
                     "The Quartermaster doesn’t seem to be in there."
                     jump monitor_branch_low1
         "Search Rooms":
@@ -629,14 +632,14 @@ label search_rooms1:
                 "One thing seems to catch your eye, a peculiar brown notebook with a title that reads Mission: Crushing Depth"
                 "Do you take and read it?"
                 menu:
-                    "Take and read it. -5 Rations.":
+                    "Take and read it. -5 rations (Current rations: [rations])":
                         $ inventory.add_item(captains_log)
                         $ captains_log = True
                         "Upon closer inspection of the contents, you learn that the true nature of this mission was to be a suicide mission, one where the crew is left in the dark of the details."
                         "The Captain is to assure control of the crew and order them to arm the bomb in the armory."
                         "The Captain's safety wasn't guaranteed either. As you read on, you snack a bit on your rations."
                         jump search_rooms1
-                    "Cut into the Captain’s locker. -5 rations":
+                    "Cut into the Captain’s locker. -5 rations (Current rations: [rations])":
                         if not full_oxygen:
                             $ rations -= 10
                             "You begin using your drone to cut into the Captain’s secret locker attached to the wall hoping for greater secrets and useful items."
@@ -655,17 +658,17 @@ label search_rooms1:
                 "However, as you look around, you see only one suit hanging in its compartment as if there was only enough to bring one on board."
                 "Do you take the suit?"
                 menu:
-                    "Take the suit. -5 Rations":
-                        if not scuba_suit:
-                            $ scuba_suit = True
-                            "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
-                            if not full_oxygen:
-                                menu:
-                                    "Take the extra suit. -5 Rations":
-                                        "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
-                                        "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
-                                        $ rations -= 5
-                                        jump search_rooms1
+                    "Take the suit":
+                        $ inventory.add_item(deep_sea_suit)
+                        $ deep_sea_suit = True
+                        "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
+                        jump search_rooms1
+                    "Take the extra suit. -5 rations (Current rations: [rations])":
+                        if not full_oxygen:
+                            "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
+                            "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
+                            $ rations -= 5
+                            jump search_rooms1
                     "Leave the Room.":
                         "You believe it's not worth taking the suit. If there is the off chance you'd find yourself on the other side of the submersible, you find it to be quite small for the time being."
                         jump search_rooms1
@@ -673,16 +676,19 @@ label search_rooms1:
             "The Cafeteria is dormant and empty. What once was a place to eat and enjoy with friends is now a grim empty mess hall." 
             "As your drone rummages through the cupboards, you find plenty of canned goods and MRE’s, this should last you for quite some time should you take the supplies."
             menu:
-                "Take 10 Rations":
-                    $ rations += 10
-                    "Not like anyone will be needing this anytime soon, these rations should allow for more time and flexibility with your options." 
-                    jump search_rooms1
+                "Take 10 Rations (Current rations: [rations])":
+                    if depleted_rations:
+                        jump search_rooms1
+                    if not depleted_rations:
+                        $ depleted_rations = True
+                        $ rations += 10
+                        "Not like anyone will be needing this anytime soon, these rations should allow for more time and flexibility with your options." 
+                        jump search_rooms1
+                "Take a cake for 10 rations":
                     if not full_oxygen:
-                        menu:
-                            "Take a cake for 10 rations":
-                                $ oxygen -= 10
-                                "You begin to cut into a big cake with your drone’s tools. It’s been a while since you had something sweet to enjoy, plus it’ll be filling. To your surprise, the cake doesn’t budge…. Until it does and you realize a burst of smoke is sprung and before you is a dark pipe spewing oxygen into the air." 
-                                jump search_rooms1
+                        $ oxygen -= 10
+                        "You begin to cut into a big cake with your drone’s tools. It’s been a while since you had something sweet to enjoy, plus it’ll be filling. To your surprise, the cake doesn’t budge…. Until it does and you realize a burst of smoke is sprung and before you is a dark pipe spewing oxygen into the air." 
+                        jump search_rooms1
                 "Leave the Food":
                     "You decide to leave the food where it is, you anticipate that you won't be needing it in the near future."
                     jump search_rooms1
@@ -702,14 +708,14 @@ label search_rooms1:
                         jump search_rooms1
                         if not full_oxygen:
                             menu:
-                                "Take the supercharged battery. -5 Rations":
+                                "Take the supercharged battery. -5 rations (Current power: [power])":
                                     "Reaching for what seems to be an ultra-charged battery your drone is immediately zapped as you awake to your senses, realizing you just touched what was actually another drone dissected of its electrical components." 
                                     "This feeling of low oxygen is not attributing well to your sense of decision." 
                                     $ power -= 5
                                     jump search_rooms1
                         if not full_oxygen:
                             menu:
-                                "Try to unlock the gun cabinet. -5 Rations":
+                                "Try to unlock the gun cabinet. -5 rations (Current oxygen: [oxygen])":
                                     "You use your drone to try to lockpick your way to a stack of guns. Perhaps it’d be useful to have some sort of weapon or at least put their components to greater use." 
                                     "To your surprise a geyser of steaming oxygen sprays wildly as the cabinet you were trying to lockpick was just shy of your tool and you actually ended up puncturing another pipe." 
                                     "That definitely was not worth the cost you were expecting."
@@ -721,5 +727,46 @@ label search_rooms1:
         "Change to full power mode and get off the sub":
             jump end_determine
 
-
-
+label end_determine:
+    if deep_sea_suit and not note and not captains_log and not sonar_device and not radio or (not deep_sea_suit and not note and not captains_log and not sonar_device and not radio):
+        jump ending1
+    if captains_log and deep_sea_suit and sonar_device:
+        jump ending2
+    if captains_log and note and not deep_sea_suit:
+        jump ending3
+label ending1:
+    menu:
+        "Ending 1: Not Much to Go On":
+            "You don’t feel so much at ease, trial and tribulation has led you with not much to go off of or to go on for that matter. There doesn’t seem to be an easy way off this ship."
+            if fix_lifeboat:
+                menu:
+                    "Take Lifeboat":
+                        "The Lifeboat pod seems like your best bet, everyone lines up to join you and are prepared for whatever may come next." 
+                        "As all safety procedures are met, you all journey through the deep dark." 
+                        "Sighs of relief can be heard amongst you and some eager to finally go home. In a distant view a tidal wave of darkness comes quickly in front of the pod, there is no way of dodging this enigmatic wave of darkness at the rate it seems to be coming into view." 
+                        "To your shock and awe, this object abrupts your new found hope destroying the pod and all those onboard. You have succumbed to the Crushing Depth."
+            else:
+                menu:
+                    "Find Another Way":
+                        "You attempt to make your way to the Scuba Room, even with a suit on hand there doesn’t seem to be much chance of survival with your limited knowledge of the situation." 
+                        "However, you won’t have to choose as you get knocked off of your feet once more but this time you don’t feel the clamoring of a floor or wall on your back. You have succumbed to the Crushing Depth."
+label ending2:
+    menu:
+        "Ending 2: Ascend the Deep":
+            "You decide you will distract the monster that is keeping you and your crew hostage in these treacherous depths. At the loading dock you ready yourself according to procedure with the Deep-Sea Suit and the mechanisms around you."
+            "In a moment's notice you are swept into the dark depths with the door sealing behind you."
+            "As your buoyancy drifts you across the chasm deep, you activate your sonar device and it pulses in synchronous chirps." 
+            "You witness a dark mass rush from your peripheral and the sensation of light allows you just enough to see your hands in front of you as if an umbral veil had been lifted from the world around you."
+            if fix_lifeboat:
+                "As you ascend from the depths, you feel a moment of relief as you see in the distance a pod floating away from the submarine." 
+                "You see 3 figures at its helm and you can’t help but at least feel an ounce of thankfulness that you and your crew were able to survive this hellscape of a situation."
+            "Coming to the surface a large frigate sails just by you, a spotlight meets your rippling body amidst the waves and you hear calls for rescue. You have been saved. But perhaps more will perish from the monster beneath the Crushing Depth."
+label ending3:
+    menu:
+        "Ending 3: Crushing Departure":
+            "You have the option to blow up the bomb in the Drone Room. No one left on the Submersible will survive the blast, but doing so will complete the intended mission." 
+            "You make your way out the monitor room, with your notes in hand and your expression of acceptance, no one feels any ill will towards you." 
+            "Any hostility is met with a cautious nod, even if they seem unknown to you true intentions. There is no reason to hate one another at this point, this is the end." 
+            "You reach the bomb and recite the code into its 9-digit pad. A red light and a beep follow soon after and before you know it, darkness clouds your mind."
+            "There will be no monster today, not now, not ever again."
+            "Mission: Crushing Depth Complete."
