@@ -3,6 +3,7 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
+
 init python:
     class Inventory():
         def __init__(self, items, number_of_items):
@@ -58,8 +59,9 @@ init:
 
 define p = Character("Player")
 define t = Character("Technician", color="FF9900")
-define a = Character("Admiral", color="#244EB0")
-define b = Character("Biologist", color="#E6FF00")
+define a = Character("Captain", color="#244EB0")
+define b = Character("Botanist", color="#E6FF00")
+define c = Character("Child", color="")
 
 image gun_img = "UI/gun.png"
 image repair_drone_img = "UI/repair_drone.png"
@@ -84,6 +86,7 @@ return:
 label start:
 
     scene bg controlroom
+
     $ inventory.add_item(gun)
     $ inventory.add_item(repair_drone)
     $ inventory.add_item(sonar_device)
@@ -177,12 +180,10 @@ label choice1:
             jump choice1_communication_monitor_system
     
     label choice1_door:
-        show bg submarine1
         "The door is sealed shut, a symptom of the Low-Power."
         jump door_choice
 
     label choice1_communication_monitor_system:
-        show bg submarine2
         "A low hum reverberates from the whirring fans within as the system struggles to produce even a flicker among any of the screens. "
         jump choice1_done
 
@@ -195,42 +196,52 @@ label choice1:
     "On the right, the Quartermaster, trying but with no avail to open the door keeping him locked within."
 
     "You can\’t help but to let out a cough, which in turn echoes out on the loud intercom within the corner of your room."
-    show tech normal at right
+    show quartermaster normal at right
     t "'Hey Techy, is that you?'"
 
-    show tech scared at right
     t "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you\’d be able to fix it.'"
 
-    show bio normal at left
+    show botanist normal
     b "'Hey Teach, there’s a bit of a problem here!'"
 
-    show bio scared at left
     b "'If I can’t get this pipe to stop from bursting, there won\’t be any air left to spare on the sub for any of us.'"
 
-    show admiral angry
+    show captain worried at left
     a "'Not an option rookies, we all know that the power will need to be cut from one of ours just to help any of our given situations."
+
     a "Luckily, the power will be staying right here in the Bridge as I order it to be. I trust the Technician will make…. The right call.'"
 
     "They all appear to be in a dire need of assistance, luckily you had last left the repair drone in the room you now occupy, which will make it easy to calibrate to the controls of the Monitor System."
     "However, as the Captain deemed correct, the energy required to operate it remotely outside the room would require an ample amount of energy consumption, not that that would be an issue were you not left in such a frugal position."
 
     jump decision_menu
+
+
+show quartermaster at right
+show botanist normal
+show captain worried at left
 label decision_menu:
     menu:
+        
         "Cut power to the Living Quarters":
             "“I\’m cutting power to the Living Quarters,” you say on the intercom."
-            show tech angry at right
+            show quartermaster angry at right
             t "'What!? You damn traitor! I trusted your ass and now you\’re going to just leave me here? You better rethink your choices Techy!'"
             menu:
                 "Return to deciding":
                     jump decision_menu
                 "Cut the power":
                     "You pull the switch, cutting power to the Living Quarters."
+                    hide quartermaster
+                    hide botanist
+                    hide captain
                     $ cut_power_to_living_quarters = True
                     $ qm_angry = True
                     jump branch1
+
         "Cut power to the Biosphere":
             "“I\’m cutting power to the Biosphere,” you say on the intercom."
+            show botanist angry
             b "'Teach, you got to think logically about this one, if the Biosphere falls, everyone is going to die. This isn\’t a choice that you can just make lightly. Please, I\’m begging you to see reason!'"
             menu:
                 "Return to deciding":
@@ -238,11 +249,15 @@ label decision_menu:
                 "Cut the power":
                     "You hesitantly pull the switch, cutting power to the Biosphere."
                     # Additional code or dialogue for the resulting scenario can be added here.
+                    hide quartermaster
+                    hide botanist
+                    hide captain
                     $ cut_power_to_biosphere = True
                     jump branch2
 
         "Cut power to the Comm. Bridge":
             "“I\’m cutting power to the Command Bridge,” you say on the intercom."
+            show captain angry at left
             a "'I\’d take this to be treason then Technician! I\’m allowing you to take back your words and do as I say. Besides, my daughter is in the room, would you be so callous to leave a child in the darkness?'"
             menu:
                 "Return to deciding":
@@ -250,9 +265,13 @@ label decision_menu:
                 "Cut the power":
                     "With great hesitation, you pull the switch, cutting power to the Command Bridge."
                     # Additional code or dialogue for the resulting scenario can be added here.
+                    hide quartermaster
+                    hide botanist
+                    hide captain
                     $ cut_power_to_command_bridge = True
                     $ a_angry = True
                     jump branch3
+
 
 label branch1:
     if cut_power_to_living_quarters:
@@ -283,7 +302,12 @@ label restore_deny_power1:
     menu:
         "Restore":
             "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
-            "“Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing."
+            
+            show captain happy
+            c "Good work Technician, I knew you’d be able to get things working once more."
+            hide captain
+            "The Captain takes a long hit from his cigar before coughing."
+        
             $ power += 25
             $ low_power = False
             $ med_power = True
@@ -311,6 +335,10 @@ label restore_deny_power1:
                 "I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already. He continues to find a solution to the pipe."
                 jump status_branch1
 label entered_bridge1:
+
+show bg dronerepair
+show captain worried
+
 "You enter the Command Bridge, the Captain paces back and forth, he bats an eye at the drone, but doesn’t leave much regard for it, he soon shifts to the Command Console."
 "His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
 
@@ -320,8 +348,10 @@ jump fix_choice1a
 label fix_choice1a:
     menu:
         "Fix Toy. -5 Rations (Current rations: [rations])":
+            show captain happy
             "As you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more. Your drone reaches for the object, at first she seems startled but allows you to take it."
             "After some time and a few tools, the toy is working again as if it were brand new. She is overjoyed and thanks you graciously."
+            hide captain
             $ fix_toy = True
             $ rations -= 5
             if enter_bridge and enter_biosphere:
@@ -333,7 +363,8 @@ label fix_choice1a:
           
         "Fix Bridge. -5 Rations (Current rations: [rations])":
             "You go to inspect the Command Bridge, it is pulsing as if it’s struggling to turn on. The Captain sits idly by watching on as you investigate the damage." 
-            "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again. However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
+            "Once inside the machinery, a couple loose slots and plugs seemed to have been the case after the initial knock around and you go to plug and fit them in place once again."
+            "However, it seems without at least mid-power, the bridge won’t be able to carry out its intended functionality."
             $ fix_bridge = True
             $ rations -= 5
             if enter_bridge and enter_biosphere:
@@ -344,6 +375,10 @@ label fix_choice1a:
                 jump branch1_menu
 
 label entered_biosphere1:
+    
+    show bg biodome
+    show botanist angry
+
     "You enter the Biosphere, the Botanist is still struggling with his pipe problem as it spews steam from its surface."
     "Fixing the pipe might solve the oxygen problem, but the plants in the Biosphere might make up for a lot of time spent while you try to figure out how to get out of this situation."
     "Which feels like more of a fruitful decision to you?"
@@ -353,7 +388,10 @@ label fix_choice1b:
     menu:
         "Fix Pipe. -5 Rations (Current rations: [rations])":
             $ rations -= 5
-            "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter. \"Eureka!\" the Botanist shouts in joy."
+            "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
+            show botanist normal
+            b "\"Eureka!\""
+            hide botanist
             if enter_bridge and enter_biosphere:
                     menu:
                         "Continue to power":
@@ -363,7 +401,9 @@ label fix_choice1b:
 
         "Scavenge Plants. +10 Rations (Current rations: [rations])":
             $ rations += 10
-            "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
+            "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone."
+            "Hopefully this was worth the cost."
+            hide botanist
             $ full_oxygen = False
             if enter_bridge and enter_biosphere:
                     menu:
@@ -401,7 +441,11 @@ label restore_deny_power2:
     menu:
         "Restore":
             "You decide that the power needs to be restored, maybe things can begin to become operable once more aboard this damaged vessel."
-            "“Good work Technician, I knew you’d be able to get things working once more.” The Captain takes a long hit from his cigar before coughing."
+
+            show captain happy
+            c "Good work Technician, I knew you’d be able to get things working once more."
+            hide captain
+            "The Captain takes a long hit from his cigar before coughing."
             $ power += 25
             $ low_power = False
             $ med_power = True
@@ -425,17 +469,23 @@ label restore_deny_power2:
             jump status_branch1
 
 label entered_bridge2:
-"You enter the Command Bridge, the Captain paces back and forth, he bats an eye at the drone, but doesn’t leave much regard for it, he soon shifts to the Command Console."
-"His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
 
-"You could fix the child’s toy or the Bridge, but you won’t have the luxury to choose both, which do you decide?"
+    show bg dronerepair
+    show captain worried
+
+    "You enter the Command Bridge, the Captain paces back and forth, he bats an eye at the drone, but doesn’t leave much regard for it, he soon shifts to the Command Console."
+    "His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
+
+    "You could fix the child’s toy or the Bridge, but you won’t have the luxury to choose both, which do you decide?"
 jump fix_choice2a
 
 label fix_choice2a:
     menu:
         "Fix Toy. -5 Rations (Current rations: [rations])":
+            show captain happy
             "As you go inspect the toy the girl is holding, it seems to be malfunctioning, twitching even, as though it were meant to do more. Your drone reaches for the object, at first she seems startled but allows you to take it."
             "After some time and a few tools, the toy is working again as if it were brand new. She is overjoyed and thanks you graciously."
+            hide captain
             $ fix_toy = True
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
@@ -459,6 +509,10 @@ label fix_choice2a:
                 jump branch2_menu
 
 label entered_living_quarters2:
+
+    show bg quarters
+    show quartermaster angry
+
     "You enter the Living Quarters, the Quartermaster is still struggling to unseal the door with the wheel at its center. The Lifeboat pod is flickering with its lights, a sign of its malfunction."
     "On the floor a radio is at a low frequency, it repeats a message over and over, but is immediately cut off before it can finish its message. Perhaps the radio will give a clue that could come handy in the future?."
     "With the state of things, you won’t be able to repair both, which do you choose?"
@@ -467,7 +521,9 @@ label entered_living_quarters2:
 label fix_choice2b:
     menu:
         "Fix Lifeboat. -5 Rations (Current rations: [rations])":
+            show quartermaster happy
             "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use. Though for the state it is in, this may require some careful analysis."
+            hide quartermaster
             "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override. This will allow the pod to be operated without the authorization of the AI. Good as new… sort of."
             $ fix_lifeboat = True
             $ rations -= 5
@@ -480,6 +536,7 @@ label fix_choice2b:
 
         "Fix Radio. -5 Rations (Current rations: [rations])":
             "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
+            hide quartermaster
             $ fix_radio = True
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
@@ -543,6 +600,10 @@ label restore_deny_power3:
             jump status_branch1
 
 label entered_living_quarters3:
+
+    show bg quarters
+    show quartermaster angry
+
     "You enter the Living Quarters, the Quartermaster is still struggling to unseal the door with the wheel at its center. The Lifeboat pod is flickering with its lights, a sign of its malfunction."
     "On the floor a radio is at a low frequency, it repeats a message over and over, but is immediately cut off before it can finish its message. Perhaps the radio will give a clue that could come handy in the future?."
     "With the state of things, you won’t be able to repair both, which do you choose?"
@@ -552,7 +613,9 @@ label fix_choice3a:
     menu:
         "Fix Lifeboat. -5 Rations (Current rations: [rations])":
             "The Lifeboat pod is sleek and simple, one that would be easy for any inexperienced novice to understand and operate should the need ever arise to use. Though for the state it is in, this may require some careful analysis."
+            show quartermaster normal
             "Some time passes and you identify through the drone that the AI Mainframe is damaged in the ship and that you’ll have to reroute it to a manual override. This will allow the pod to be operated without the authorization of the AI. Good as new… sort of."
+            hide quartermaster
             $ fix_lifeboat = True
             $ rations -= 5
             if enter_living_quarters and enter_biosphere:
@@ -564,6 +627,7 @@ label fix_choice3a:
 
         "Fix Radio. -5 Rations (Current rations: [rations])":
             "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
+            hide quartermaster
             $ fix_radio = True
             $ rations -= 5
             if enter_living_quarters and enter_biosphere:
@@ -574,6 +638,10 @@ label fix_choice3a:
                 jump branch3_menu
 
 label entered_biosphere3:
+
+    show bg biodome
+    show botanist angry
+
     "You enter the Biosphere, the Botanist is still struggling with his pipe problem as it spews steam from its surface."
     "Fixing the pipe might solve the oxygen problem, but the plants in the Biosphere might make up for a lot of time spent while you try to figure out how to get out of this situation."
     "Which feels like more of a fruitful decision to you?"
@@ -583,7 +651,9 @@ label fix_choice3b:
     menu:
         "Fix Pipe. -5 Rations (Current rations: [rations])":
             $ rations -= 5
-            "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter. \"Eureka!\" the Botanist shouts in joy."
+            "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
+            b " \"Eureka!\" this brings me much joy."
+            hide botanist
             if enter_bridge and enter_biosphere:
                     menu:
                         "Continue to power":
@@ -593,6 +663,7 @@ label fix_choice3b:
 
         "Scavenge Plants. +10 Rations (Current rations: [rations])":
             "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
+            hide botanist
             $ full_oxygen = False
             $ rations += 10
             if enter_living_quarters and enter_biosphere:
@@ -622,6 +693,9 @@ label menu_monitor_check1:
         "Search Rooms":
             jump search_rooms1
 label monitor_branch_low1:
+
+    show bg controlroom
+
     menu:
         "Check Left Monitors": 
             menu:
