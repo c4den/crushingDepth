@@ -835,6 +835,7 @@ label fix_choice3a:
             "After some fiddling with the inside of the electronic box and rearranging some wires, the radio begins to emit a message on repeat. Numerical in nature, but otherwise useless unless you decode it. You write it down in a handy note for later."
             hide quartermaster
             hide radio
+            $ inventory.add_item(note)
             $ fix_radio = True
             # HIDE INVENTORY
             # ============================================================
