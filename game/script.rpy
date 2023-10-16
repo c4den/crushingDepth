@@ -47,6 +47,9 @@ init:
     $ low_power = True
     $ depleted_rations = False
     $ finish_game = False
+    $ ending_1 = False
+    $ ending_2 = False
+    $ ending_3 = False
     default inventory = Inventory([], 0)
     define repair_drone = InventoryItem("Repair Drone")
     define sonar_device = InventoryItem("Sonar Device")
@@ -1194,17 +1197,6 @@ label search_rooms1:
                     $ deep_sea_suit = True
                     "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
                     jump search_rooms1
-                "Take the extra suit. -5 rations (Current rations: [rations])":
-                    $ rations -= 5
-                    if rations == 0:
-                        jump rations_ending
-                    if not full_oxygen:
-                        "You desperately take the time to try and fold away another suit you have spotted in the room, you think this will be of great help to have another diver with you." 
-                        "However, you soon find yourself grasping at nothing with your drone as if there was nothing there to begin with."
-                    else:
-                        "You already have full oxygen and decide not to tamper with the locker further."
-                    jump search_rooms1
-
                 "Leave the Room.":
                     "You believe it's not worth taking the suit. If there is the off chance you'd find yourself on the other side of the submersible, you find it to be quite small for the time being."
                     jump search_rooms1
@@ -1224,8 +1216,11 @@ label search_rooms1:
                     if not full_oxygen:
                         $ oxygen -= 10
                         if oxygen == 0:
-                            jump oxygen_ending
-                        "You begin to cut into a big cake with your drone’s tools. It’s been a while since you had something sweet to enjoy, plus it’ll be filling. To your surprise, the cake doesn’t budge…. Until it does and you realize a burst of smoke is sprung and before you is a dark pipe spewing oxygen into the air." 
+                           jump oxygen_ending
+                    elif full_oxygen:
+                        pass
+                        "You begin to cut into a big cake with your drone’s tools. It’s been a while since you had something sweet to enjoy, plus it’ll be filling. To your surprise, the cake doesn’t budge... "
+                        "Until it does and you realize a burst of smoke is sprung and before you is a dark pipe spewing oxygen into the air." 
                         jump search_rooms1
                 "Leave the Food":
                     "You decide to leave the food where it is, you anticipate that you won't be needing it in the near future."
@@ -1315,6 +1310,8 @@ label search_rooms1:
                                 if power == 0:
                                     jump power_ending
                                 jump search_rooms1
+                    elif full_oxygen:
+                        pass
                     if not full_oxygen:
                         menu:
                             "Try to unlock the gun cabinet. -5 rations (Current oxygen: [oxygen])":
@@ -1325,20 +1322,30 @@ label search_rooms1:
                                 if oxygen == 0:
                                     jump oxygen_ending
                                 jump search_rooms1
+                    elif full_oxygen:
+                        pass
                 "Leave the Room.":
                     "As cool as it would be to fiddle with gadgets, you have more dire things to worry about. You decide not to take the device."
                     
                     jump search_rooms1
         "Change to full power mode and get off the sub":
-            jump end_determine
+            $ finish_game = True
+            if finish_game and ((not deep_sea_suit and not note and not captains_log and not sonar_device and not radio) or (deep_sea_suit and not note and not captains_log and not sonar_device and not radio)):
+                $ ending_1 = True
+                jump end_determine
+            if finish_game and captains_log and deep_sea_suit and sonar_device:
+                $ ending_2 = True
+                jump end_determine
+            if finish_game and captains_log and note and not deep_sea_suit:
+                $ ending_3 = True
+                jump end_determine
 
 label end_determine:
-    $ finish_game = True
-    if finish_game and ((not deep_sea_suit and not note and not captains_log and not sonar_device and not radio) or (deep_sea_suit and not note and not captains_log and not sonar_device and not radio)):
+    if ending_1 == True:
         jump ending1
-    if finish_game and captains_log and deep_sea_suit and sonar_device:
+    if ending_2 == True:
         jump ending2
-    if finish_game and captains_log and note and not deep_sea_suit:
+    if ending_3 == True:
         jump ending3
 label ending1:
 
