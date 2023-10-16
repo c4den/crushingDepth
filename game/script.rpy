@@ -70,7 +70,7 @@ image captains_log_img = "UI/captains_log.png"
 image note_img = "UI/note.png"
 image radio_img = "UI/radio.png"
 image toy_img = "UI/toy.png"
-#image gun = "UI/gun.png"
+image gun_img = "UI/gun.png"
 
 
 label stuff:
