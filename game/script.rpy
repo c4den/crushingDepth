@@ -54,6 +54,7 @@ init:
     define bad_points = 0
     define neutral_points = 0
     define evil_points = 0
+    define dumb_points = 0
     default inventory = Inventory([], 0)
     define repair_drone = InventoryItem("Repair Drone")
     define sonar_device = InventoryItem("Sonar Device")
@@ -252,6 +253,7 @@ label decision_menu:
                     hide botanist
                     hide captain
                     $ cut_power_to_biosphere = True
+                    $ dumb_points += 1
                     jump branch2
 
         "Cut power to the Comm. Bridge":
@@ -480,6 +482,7 @@ label fix_choice1b:
             "Hopefully this was worth the cost."
             hide botanist
             $ full_oxygen = False
+            $ dumb_points += 1
             if enter_bridge and enter_biosphere:
                     menu:
                         "Continue to power":
@@ -940,6 +943,7 @@ label fix_choice3b:
             "Perhaps it’s a dead end to fix the broken pipe, it’s broken after all, the Botanist, to his dismay sees the drone go to snip at some of the plants, parsley, tomatoes, carrots, a variety of foods get stuffed into the open cartridge of the drone. Hopefully this was worth the cost."
             hide botanist
             $ full_oxygen = False
+            $ dumb_points += 1
             $ rations += 10
             if enter_living_quarters and enter_biosphere:
                     menu:
@@ -1221,12 +1225,10 @@ label search_rooms1:
                         "Not like anyone will be needing this anytime soon, these rations should allow for more time and flexibility with your options." 
                         jump search_rooms1
                 "Take a cake for 10 rations":
-                    if not full_oxygen:
+                    if dumb_points > 0:
                         $ oxygen -= 10
                         if oxygen == 0:
                            jump oxygen_ending
-                    elif full_oxygen:
-                        pass
                         "You begin to cut into a big cake with your drone’s tools. It’s been a while since you had something sweet to enjoy, plus it’ll be filling. To your surprise, the cake doesn’t budge... "
                         "Until it does and you realize a burst of smoke is sprung and before you is a dark pipe spewing oxygen into the air." 
                         jump search_rooms1
@@ -1310,7 +1312,7 @@ label search_rooms1:
                     $ neutral_points += 1
                     "It glows dimly yellow, yet dormant, what use may this find you wonder? Your drone tweaks at it a bit to stay powered beyond its stationary charger and drops it into its compartment."
                     jump search_rooms1
-                    if not full_oxygen:
+                    if dumb_points > 0:
                         menu:
                             "Take the supercharged battery. -5 rations (Current power: [power])":
                                 "Reaching for what seems to be an ultra-charged battery your drone is immediately zapped as you awake to your senses, realizing you just touched what was actually another drone dissected of its electrical components." 
@@ -1319,9 +1321,7 @@ label search_rooms1:
                                 if power == 0:
                                     jump power_ending
                                 jump search_rooms1
-                    elif full_oxygen:
-                        pass
-                    if not full_oxygen:
+                    if dumb_points > 0:
                         menu:
                             "Try to unlock the gun cabinet. -5 rations (Current oxygen: [oxygen])":
                                 "You use your drone to try to lockpick your way to a stack of guns. Perhaps it’d be useful to have some sort of weapon or at least put their components to greater use." 
@@ -1331,8 +1331,6 @@ label search_rooms1:
                                 if oxygen == 0:
                                     jump oxygen_ending
                                 jump search_rooms1
-                    elif full_oxygen:
-                        pass
                 "Leave the Room.":
                     "As cool as it would be to fiddle with gadgets, you have more dire things to worry about. You decide not to take the device."
                     
