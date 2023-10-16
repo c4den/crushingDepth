@@ -541,7 +541,7 @@ label restore_deny_power2:
             $ a_angry = True
             $ qm_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
-            c "You traitor! I ordered you to turn things on to mid-power!"
+            a "You traitor! I ordered you to turn things on to mid-power!"
             "The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
             q "Techy, what the actual hell?! You were supposed to turn everything back on you son of a-"
             "He stops himself before finishing."
