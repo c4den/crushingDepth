@@ -58,7 +58,7 @@ init:
        
 
 define p = Character("Player")
-define t = Character("Technician", color="FF9900")
+define q = Character("Quartermaster", color="FF9900")
 define a = Character("Captain", color="#244EB0")
 define b = Character("Botanist", color="#E6FF00")
 define c = Character("Child", color="")
@@ -130,9 +130,9 @@ label choice1:
 
     "You can\’t help but to let out a cough, which in turn echoes out on the loud intercom within the corner of your room."
     show quartermaster normal at right
-    t "'Hey Techy, is that you?'"
+    q "'Hey Techy, is that you?'"
 
-    t "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you\’d be able to fix it.'"
+    q "'You gotta help me out here, every door is sealed shut and not even the Lifeboat wants to turn on, I know you\’d be able to fix it.'"
 
     show botanist normal
     b "'Hey Teach, there’s a bit of a problem here!'"
@@ -222,7 +222,7 @@ label decision_menu:
         "Cut power to the Living Quarters":
             "“I\’m cutting power to the Living Quarters,” you say on the intercom."
             show quartermaster angry at right
-            t "'What!? You damn traitor! I trusted your ass and now you\’re going to just leave me here? You better rethink your choices Techy!'"
+            q "'What!? You damn traitor! I trusted your ass and now you\’re going to just leave me here? You better rethink your choices Techy!'"
             menu:
                 "Return to deciding":
                     jump decision_menu
@@ -331,8 +331,12 @@ label restore_deny_power1:
         "Deny":
             $ a_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
-            "You traitor! I ordered you to turn things on to mid-power!” The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
-            "The Botanist looks around and sighs, “Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose.” He nods in agreement."
+            a "You traitor! I ordered you to turn things on to mid-power!"
+            "The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
+            "The Botanist looks around and sighs."
+            b "Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose."
+            "He nods in agreement."
+            
             if fix_pipe:
                 "Now let’s go see what is really going on out there."
             if not full_oxygen:
@@ -529,7 +533,7 @@ label restore_deny_power2:
                         "His daughter remained startled in the far edge of the room."
                         hide captain
             show quartermaster normal
-            "Nice work Techy! Now then let’s do good on our part and work on getting the hell off this coffin! I'll grab my tools."
+            q "Nice work Techy! Now then let’s do good on our part and work on getting the hell off this coffin! I'll grab my tools."
             hide quartermaster
                 
             jump status_branch1
@@ -537,9 +541,11 @@ label restore_deny_power2:
             $ a_angry = True
             $ qm_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
-            "You traitor! I ordered you to turn things on to mid-power!” The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
-            "“Techy, what the actual hell?! You were supposed to turn everything back on you son of a-”"
-            "he stops himself before finishing. “I knew better than to trust a bastard like you and I did anyway, hope you ain’t thinking about returning over here you dumb fool.”"
+            c "You traitor! I ordered you to turn things on to mid-power!"
+            "The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
+            q "Techy, what the actual hell?! You were supposed to turn everything back on you son of a-"
+            "He stops himself before finishing."
+            q "“I knew better than to trust a bastard like you and I did anyway, hope you ain’t thinking about returning over here you dumb fool.”"
             "The Quartermaster punches the door before nearly breaking his hand, he squirms off holding it, too far to be seen from the monitor."
             jump status_branch1
 
@@ -786,20 +792,22 @@ label restore_deny_power3:
             $ power += 25
             $ low_power = False
             $ med_power = True
-            show quartermaster happy
-            "Nice work Techy! Now then let’s do good on our part and work on getting the hell off this coffin! I'll grab my tools."
+            show quartermaster normal
+            q "Nice work Techy! Now then let’s do good on our part and work on getting the hell off this coffin! I'll grab my tools."
             hide quartermaster
             jump status_branch1
         "Deny":
             $ qm_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
-            "The Botanist looks around and sighs, “Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose.” He nods in agreement."
+            "The Botanist looks around and sighs."
+            b "Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose.” He nods in agreement."
             if fix_pipe:
                 "Now let’s go see what is really going on out there."
             if not full_oxygen:
                 "I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already. He continues to find a solution to the pipe."
-            "“Techy, what the actual hell?! You were supposed to turn everything back on you son of a-”"
-            "he stops himself before finishing. “I knew better than to trust a bastard like you and I did anyway, hope you ain’t thinking about returning over here you dumb fool.”"
+            q "Techy, what the actual hell?! You were supposed to turn everything back on you son of a-"
+            "He stops himself before finishing." 
+            q "I knew better than to trust a bastard like you and I did anyway, hope you ain’t thinking about returning over here you dumb fool."
             "The Quartermaster punches the door before nearly breaking his hand, he squirms off holding it, too far to be seen from the monitor."
             jump status_branch1
 
@@ -922,7 +930,7 @@ label fix_choice3b:
             show botanist normal
             b " Eureka! This brings me much joy."
             hide botanist
-            if enter_bridge and enter_biosphere:
+            if enter_living_quarters and enter_biosphere:
                     menu:
                         "Continue to power":
                             jump restore_deny_power3
@@ -1344,6 +1352,7 @@ label search_rooms1:
                                 jump search_rooms1
                 "Leave the Room.":
                     "As cool as it would be to fiddle with gadgets, you have more dire things to worry about. You decide not to take the device."
+                    
                     jump search_rooms1
         "Change to full power mode and get off the sub":
             jump end_determine
@@ -1358,7 +1367,7 @@ label end_determine:
         jump ending3
 label ending1:
 
-    show bg controlroomgameover
+    scene bg controlroomgameover
 
     menu:
         "Ending 1: Not Much to Go On":
@@ -1380,7 +1389,7 @@ label ending1:
 return
 label ending2:
     
-    show ending2
+    scene bg ending2
 
     menu:
         "Ending 2: Ascend the Deep":
@@ -1395,7 +1404,7 @@ label ending2:
 return
 label ending3:
 
-    show ending3
+    scene bg ending3
 
     menu:
         "Ending 3: Crushing Departure":
