@@ -70,6 +70,7 @@ image captains_log_img = "UI/captains_log.png"
 image note_img = "UI/note.png"
 image radio_img = "UI/radio.png"
 image toy_img = "UI/toy.png"
+#image gun = "UI/gun.png"
 
 
 label stuff:
@@ -163,11 +164,6 @@ label choice1:
     $ xPos = 0.1
 
     while itemCount >= 0:
-        if inventory.items[itemCount].name == "Gun":
-            show gun_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
         if inventory.items[itemCount].name == "Repair Drone":
             show repair_drone_img:
                 xalign xPos yalign 0.01
@@ -381,11 +377,6 @@ label fix_choice1a:
             $ xPos = 0.1
 
             while itemCount >= 0:
-                if inventory.items[itemCount].name == "Gun":
-                    show gun_img:
-                        xalign xPos yalign 0.01
-                        xysize(100,100)
-
                 if inventory.items[itemCount].name == "Repair Drone":
                     show repair_drone_img:
                         xalign xPos yalign 0.01
@@ -587,11 +578,6 @@ label fix_choice2a:
             $ xPos = 0.1
 
             while itemCount >= 0:
-                if inventory.items[itemCount].name == "Gun":
-                    show gun_img:
-                        xalign xPos yalign 0.01
-                        xysize(100,100)
-
                 if inventory.items[itemCount].name == "Repair Drone":
                     show repair_drone_img:
                         xalign xPos yalign 0.01
@@ -703,11 +689,6 @@ label fix_choice2b:
             $ xPos = 0.1
 
             while itemCount >= 0:
-                if inventory.items[itemCount].name == "Gun":
-                    show gun_img:
-                        xalign xPos yalign 0.01
-                        xysize(100,100)
-
                 if inventory.items[itemCount].name == "Repair Drone":
                     show repair_drone_img:
                         xalign xPos yalign 0.01
@@ -861,11 +842,6 @@ label fix_choice3a:
             $ xPos = 0.1
 
             while itemCount >= 0:
-                if inventory.items[itemCount].name == "Gun":
-                    show gun_img:
-                        xalign xPos yalign 0.01
-                        xysize(100,100)
-
                 if inventory.items[itemCount].name == "Repair Drone":
                     show repair_drone_img:
                         xalign xPos yalign 0.01
@@ -1084,11 +1060,6 @@ label search_rooms1:
                     $ xPos = 0.1
 
                     while itemCount >= 0:
-                        if inventory.items[itemCount].name == "Gun":
-                            show gun_img:
-                                xalign xPos yalign 0.01
-                                xysize(100,100)
-
                         if inventory.items[itemCount].name == "Repair Drone":
                             show repair_drone_img:
                                 xalign xPos yalign 0.01
@@ -1168,11 +1139,6 @@ label search_rooms1:
                     $ xPos = 0.1
 
                     while itemCount >= 0:
-                        if inventory.items[itemCount].name == "Gun":
-                            show gun_img:
-                                xalign xPos yalign 0.01
-                                xysize(100,100)
-
                         if inventory.items[itemCount].name == "Repair Drone":
                             show repair_drone_img:
                                 xalign xPos yalign 0.01
@@ -1285,11 +1251,6 @@ label search_rooms1:
                     $ xPos = 0.1
 
                     while itemCount >= 0:
-                        if inventory.items[itemCount].name == "Gun":
-                            show gun_img:
-                                xalign xPos yalign 0.01
-                                xysize(100,100)
-
                         if inventory.items[itemCount].name == "Repair Drone":
                             show repair_drone_img:
                                 xalign xPos yalign 0.01
