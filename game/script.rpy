@@ -340,7 +340,7 @@ label restore_deny_power1:
             jump status_branch1
 label entered_bridge1:
 
-show bg dronerepair
+show bg helm
 show captain worried
 show toy at left
 
@@ -459,7 +459,7 @@ label fix_choice1b:
             $ rations -= 5
             "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
             show botanist normal
-            b "\"Eureka!\""
+            b " Eureka! This brings me much joy."
             hide botanist
             if enter_bridge and enter_biosphere:
                     menu:
@@ -545,7 +545,7 @@ label restore_deny_power2:
 
 label entered_bridge2:
 
-    show bg dronerepair
+    show bg helm
     show captain worried
     show toy at left
 
@@ -919,7 +919,8 @@ label fix_choice3b:
         "Fix Pipe. -5 Rations (Current rations: [rations])":
             $ rations -= 5
             "The Botanist backs away from his struggle to seal the leak while your drone inches near. With some bolts, tools, and applied heat, the steam draws its last from the choking pipe and the Oxygen level begins to steady on the meter."
-            b " \"Eureka!\" this brings me much joy."
+            show botanist normal
+            b " Eureka! This brings me much joy."
             hide botanist
             if enter_bridge and enter_biosphere:
                     menu:
@@ -953,7 +954,7 @@ label status_branch1:
 label menu_monitor_check1:
     menu:
         "Check Monitors":
-            show bg controlroom
+            show bg controlroomgameover
             if low_power:
                 jump monitor_branch_low1
             if not low_power:
@@ -976,7 +977,11 @@ label monitor_branch_low1:
                     if power == 0:
                         jump power_ending
                     if a_angry:
+                        show captain angry
+                        show gun at left
                         "You check the Scuba Room, you see the Captain pacing around it swinging his gun in anger."
+                        hide captain
+                        hide gun
                         jump monitor_branch_low1
                     else:
                         "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
@@ -1015,7 +1020,11 @@ label monitor_branch_med1:
                     if power == 0:
                         jump power_ending
                     if a_angry:
+                        show captain angry
+                        show gun at left
                         "You check the Captain’s Quarters, you see the Captain pacing around it swinging his gun in anger."
+                        hide captain
+                        hide gun
                         jump monitor_branch_med1
                     else:
                         "You check the Scuba Room for the Captain’s presence, he doesn’t seem to be there."
@@ -1235,6 +1244,9 @@ label search_rooms1:
                     jump search_rooms1
 
         "Search Drone Room":
+            
+            show bg dronerepair
+
             if qm_angry:
                 "You go into the Drone Room but find your drone unexpectedly kicked over, by the time you’re able to restabilize you have lost both power and time. (-5 rations and -5\% power)"
                 $ rations -= 5
@@ -1345,6 +1357,9 @@ label end_determine:
     if finish_game and captains_log and note and not deep_sea_suit:
         jump ending3
 label ending1:
+
+    show bg controlroomgameover
+
     menu:
         "Ending 1: Not Much to Go On":
             "You don’t feel so much at ease, trial and tribulation has led you with not much to go off of or to go on for that matter. There doesn’t seem to be an easy way off this ship."
@@ -1364,6 +1379,9 @@ label ending1:
                         "However, you won’t have to choose as you get knocked off of your feet once more but this time you don’t feel the clamoring of a floor or wall on your back. You have succumbed to the Crushing Depth."
 return
 label ending2:
+    
+    show ending2
+
     menu:
         "Ending 2: Ascend the Deep":
             "You decide you will distract the monster that is keeping you and your crew hostage in these treacherous depths. At the loading dock you ready yourself according to procedure with the Deep-Sea Suit and the mechanisms around you."
@@ -1376,6 +1394,9 @@ label ending2:
             "Coming to the surface a large frigate sails just by you, a spotlight meets your rippling body amidst the waves and you hear calls for rescue. You have been saved. But perhaps more will perish from the monster beneath the Crushing Depth."
 return
 label ending3:
+
+    show ending3
+
     menu:
         "Ending 3: Crushing Departure":
             "You have the option to blow up the bomb in the Drone Room. No one left on the Submersible will survive the blast, but doing so will complete the intended mission." 
