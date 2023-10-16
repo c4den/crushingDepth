@@ -47,9 +47,13 @@ init:
     $ low_power = True
     $ depleted_rations = False
     $ finish_game = False
-    $ ending_1 = False
-    $ ending_2 = False
-    $ ending_3 = False
+    define ending_1 = False
+    define ending_2 = False
+    define ending_3 = False
+    define good_points = 0
+    define bad_points = 0
+    define neutral_points = 0
+    define evil_points = 0
     default inventory = Inventory([], 0)
     define repair_drone = InventoryItem("Repair Drone")
     define sonar_device = InventoryItem("Sonar Device")
@@ -684,6 +688,7 @@ label fix_choice2b:
             hide quartermaster
             hide radio
             $ fix_radio = True
+            $ evil_points += 1
             $ inventory.add_item(note)
             # HIDE INVENTORY
             # ============================================================
@@ -843,6 +848,7 @@ label fix_choice3a:
             hide radio
             $ inventory.add_item(note)
             $ fix_radio = True
+            $ evil_points += 1
             # HIDE INVENTORY
             # ============================================================
             hide sonar_device_img
@@ -1116,6 +1122,7 @@ label search_rooms1:
                         $ itemCount -= 1
                     # ============================================================
                     $ captains_log = True
+                    $ good_points += 1
                     "Upon closer inspection of the contents, you learn that the true nature of this mission was to be a suicide mission, one where the crew is left in the dark of the details."
                     "The Captain is to assure control of the crew and order them to arm the bomb in the armory."
                     "The Captain's safety wasn't guaranteed either. As you read on, you snack a bit on your rations."
@@ -1195,6 +1202,7 @@ label search_rooms1:
                         $ itemCount -= 1
                     # ============================================================
                     $ deep_sea_suit = True
+                    $ bad_points +=1
                     "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
                     jump search_rooms1
                 "Leave the Room.":
@@ -1299,6 +1307,7 @@ label search_rooms1:
                         $ itemCount -= 1
                     # ============================================================
                     $ sonar_device = True
+                    $ neutral_points += 1
                     "It glows dimly yellow, yet dormant, what use may this find you wonder? Your drone tweaks at it a bit to stay powered beyond its stationary charger and drops it into its compartment."
                     jump search_rooms1
                     if not full_oxygen:
@@ -1329,24 +1338,16 @@ label search_rooms1:
                     
                     jump search_rooms1
         "Change to full power mode and get off the sub":
-            $ finish_game = True
-            if finish_game and ((not deep_sea_suit and not note and not captains_log and not sonar_device and not radio) or (deep_sea_suit and not note and not captains_log and not sonar_device and not radio)):
-                $ ending_1 = True
-                jump end_determine
-            if finish_game and captains_log and deep_sea_suit and sonar_device:
-                $ ending_2 = True
-                jump end_determine
-            if finish_game and captains_log and note and not deep_sea_suit:
-                $ ending_3 = True
                 jump end_determine
 
 label end_determine:
-    if ending_1 == True:
+    if bad_points >= 0 and good_points < 0 and neutral_points < 0 and evil_points < 0:
         jump ending1
-    if ending_2 == True:
+    if good_points > 0 and neutral_points > 0 and bad_points > 0:
         jump ending2
-    if ending_3 == True:
+    if good_points > 0 and evil_points > 0 and bad_points < 0:
         jump ending3
+    
 label ending1:
 
     scene bg controlroomgameover
