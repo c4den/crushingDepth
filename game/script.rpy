@@ -1345,7 +1345,7 @@ label end_determine:
         jump ending1
     if good_points > 0 and neutral_points > 0 and bad_points > 0:
         jump ending2
-    if good_points > 0 and evil_points > 0 and bad_points < 0:
+    if good_points > 0 and evil_points > 0 and bad_points <= 0:
         jump ending3
     
 label ending1:
