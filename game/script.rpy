@@ -70,7 +70,7 @@ image captains_log_img = "UI/captains_log.png"
 image note_img = "UI/note.png"
 image radio_img = "UI/radio.png"
 image toy_img = "UI/toy.png"
-image gun_img = "UI/gun.png"
+image gun = "UI/gun.png"
 
 
 label stuff:
@@ -327,11 +327,15 @@ label restore_deny_power1:
         "Deny":
             $ a_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
+            show captain angry
             a "You traitor! I ordered you to turn things on to mid-power!"
             "The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
+            hide captain
             "The Botanist looks around and sighs."
+            show botanist normal
             b "Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose."
             "He nods in agreement."
+            hide botanist
             
             if fix_pipe:
                 "Now let’s go see what is really going on out there."
@@ -532,12 +536,17 @@ label restore_deny_power2:
             $ a_angry = True
             $ qm_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
+            show captain angry
             a "You traitor! I ordered you to turn things on to mid-power!"
             "The Captain angrily storms out of the room shooting the console before storming off the monitor. His daughter also leaves the edge of the monitor to follow after him."
+            hide captain
+            show quartermaster angry
             q "Techy, what the actual hell?! You were supposed to turn everything back on you son of a-"
             "He stops himself before finishing."
             q "“I knew better than to trust a bastard like you and I did anyway, hope you ain’t thinking about returning over here you dumb fool.”"
             "The Quartermaster punches the door before nearly breaking his hand, he squirms off holding it, too far to be seen from the monitor."
+            hide quartermaster
+        
             jump status_branch1
 
 label entered_bridge2:
@@ -780,16 +789,21 @@ label restore_deny_power3:
         "Deny":
             $ qm_angry = True
             "You decide that things should stay depowered until you have had a chance to make sure the rest of the submersible is in working condition before turning everything back on just in case."
+            show botanist normal
             "The Botanist looks around and sighs."
             b "Well there could in fact be things aboard the ship that could be in danger if turned back up to mid-power, good call I suppose.” He nods in agreement."
+            hide botanist normal
             if fix_pipe:
                 "Now let’s go see what is really going on out there."
             if not full_oxygen:
                 "I can’t stand idly while this is still broken, it’s not steaming as much now which is a really bad sign that the oxygen may have depleted too much already. He continues to find a solution to the pipe."
+            show quartermaster angry
             q "Techy, what the actual hell?! You were supposed to turn everything back on you son of a-"
             "He stops himself before finishing." 
             q "I knew better than to trust a bastard like you and I did anyway, hope you ain’t thinking about returning over here you dumb fool."
             "The Quartermaster punches the door before nearly breaking his hand, he squirms off holding it, too far to be seen from the monitor."
+            hide quartermaster
+        
             jump status_branch1
 
 label entered_living_quarters3:
