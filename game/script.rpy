@@ -54,7 +54,7 @@ init:
     define captains_log = InventoryItem("Captain\'s Log")
     define note = InventoryItem("Note")
     define radio = InventoryItem("Radio")
-    define gun = InventoryItem("Gun")
+    define toy = InventoryItem("Toy")
        
 
 define p = Character("Player")
@@ -63,7 +63,6 @@ define a = Character("Captain", color="#244EB0")
 define b = Character("Botanist", color="#E6FF00")
 define c = Character("Child", color="")
 
-image gun_img = "UI/gun.png"
 image repair_drone_img = "UI/repair_drone.png"
 image sonar_device_img = "UI/sonar_device.png"
 image deep_sea_suit_img = "UI/sea_suit.png"
@@ -87,74 +86,7 @@ return:
 label start:
 
     scene bg controlroom
-
-    $ inventory.add_item(gun)
-    $ inventory.add_item(repair_drone)
-    $ inventory.add_item(sonar_device)
-    $ inventory.add_item(deep_sea_suit)
-    $ inventory.add_item(captains_log)
-    $ inventory.add_item(note)
-    $ inventory.add_item(radio)
-
-
-    # SHOW INVENTORY
-    # ============================================================
-    $ itemCount = inventory.number_of_items - 1
-    $ xPos = 0.1
-
-    while itemCount >= 0:
-        if inventory.items[itemCount].name == "Gun":
-            show gun_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        if inventory.items[itemCount].name == "Repair Drone":
-            show repair_drone_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        if inventory.items[itemCount].name == "Sonar Device":
-            show sonar_device_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        if inventory.items[itemCount].name == "Deep Sea Suit":
-            show deep_sea_suit_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        if inventory.items[itemCount].name == "Captain\'s Log":
-            show captains_log_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        if inventory.items[itemCount].name == "Note":
-            show note_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        if inventory.items[itemCount].name == "Radio":
-            show radio_img:
-                xalign xPos yalign 0.01
-                xysize(100,100)
-
-        $ xPos += 0.125
-        $ itemCount -= 1
-    # ============================================================
-
-    # HIDE INVENTORY
-    # ============================================================
-    hide gun_img
-    hide repair_drone_img
-    hide sonar_device_img
-    hide deep_sea_suit_img
-    hide captains_log_img
-    hide note_img
-    hide radio_img
-    # ============================================================
-
-    ""
-
+  
     "The room jolts you off of your feet. The sound of a great crash and crushing metal fill your ears and everything goes dark."
 
     "You awake to the sound of an alarm, a red light spins and strobes a dim room from above the door to your right."
@@ -213,7 +145,70 @@ label choice1:
     a "Luckily, the power will be staying right here in the Bridge as I order it to be. I trust the Technician will make…. The right call.'"
 
     "They all appear to be in a dire need of assistance, luckily you had last left the repair drone in the room you now occupy, which will make it easy to calibrate to the controls of the Monitor System."
+    
+    $ inventory.add_item(repair_drone)
+    # HIDE INVENTORY
+    # ============================================================
+    hide sonar_device_img
+    hide deep_sea_suit_img
+    hide captains_log_img
+    hide note_img
+    hide radio_img
+    hide toy_img
+    # ============================================================
+
+    # SHOW INVENTORY
+    # ============================================================
+    $ itemCount = inventory.number_of_items - 1
+    $ xPos = 0.1
+
+    while itemCount >= 0:
+        if inventory.items[itemCount].name == "Gun":
+            show gun_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Repair Drone":
+            show repair_drone_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Sonar Device":
+            show sonar_device_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Deep Sea Suit":
+            show deep_sea_suit_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Captain\'s Log":
+            show captains_log_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Note":
+            show note_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Radio":
+            show radio_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        if inventory.items[itemCount].name == "Toy":
+            show toy_img:
+                xalign xPos yalign 0.01
+                xysize(100,100)
+
+        $ xPos += 0.125
+        $ itemCount -= 1
+    # ============================================================
     "However, as the Captain deemed correct, the energy required to operate it remotely outside the room would require an ample amount of energy consumption, not that that would be an issue were you not left in such a frugal position."
+
+
 
     jump decision_menu
 
@@ -365,6 +360,66 @@ label fix_choice1a:
             hide captain
             hide toy
             $ fix_toy = True
+            $ inventory.add_item(toy)
+            # HIDE INVENTORY
+            # ============================================================
+            hide sonar_device_img
+            hide deep_sea_suit_img
+            hide captains_log_img
+            hide note_img
+            hide radio_img
+            hide toy_img
+            # ============================================================
+
+            # SHOW INVENTORY
+            # ============================================================
+            $ itemCount = inventory.number_of_items - 1
+            $ xPos = 0.1
+
+            while itemCount >= 0:
+                if inventory.items[itemCount].name == "Gun":
+                    show gun_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Repair Drone":
+                    show repair_drone_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Sonar Device":
+                    show sonar_device_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Deep Sea Suit":
+                    show deep_sea_suit_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Captain\'s Log":
+                    show captains_log_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Note":
+                    show note_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Radio":
+                    show radio_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Toy":
+                    show toy_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                $ xPos += 0.125
+                $ itemCount -= 1
+            # ============================================================
             $ rations -= 5
             if enter_bridge and enter_biosphere:
                     menu:
@@ -498,7 +553,7 @@ label entered_bridge2:
     "His daughter seems to be in the corner sad about her toy which seems to be of mechanical design."
 
     "You could fix the child’s toy or the Bridge, but you won’t have the luxury to choose both, which do you decide?"
-jump fix_choice2a
+    jump fix_choice2a
 
 label fix_choice2a:
     menu:
@@ -509,6 +564,66 @@ label fix_choice2a:
             hide captain
             hide toy
             $ fix_toy = True
+            $ inventory.add_item(toy)
+            # HIDE INVENTORY
+            # ============================================================
+            hide sonar_device_img
+            hide deep_sea_suit_img
+            hide captains_log_img
+            hide note_img
+            hide radio_img
+            hide toy_img
+            # ============================================================
+
+            # SHOW INVENTORY
+            # ============================================================
+            $ itemCount = inventory.number_of_items - 1
+            $ xPos = 0.1
+
+            while itemCount >= 0:
+                if inventory.items[itemCount].name == "Gun":
+                    show gun_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Repair Drone":
+                    show repair_drone_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Sonar Device":
+                    show sonar_device_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Deep Sea Suit":
+                    show deep_sea_suit_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Captain\'s Log":
+                    show captains_log_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Note":
+                    show note_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Radio":
+                    show radio_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Toy":
+                    show toy_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                $ xPos += 0.125
+                $ itemCount -= 1
+            # ============================================================
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
                     menu:
@@ -565,6 +680,66 @@ label fix_choice2b:
             hide quartermaster
             hide radio
             $ fix_radio = True
+            $ inventory.add_item(note)
+            # HIDE INVENTORY
+            # ============================================================
+            hide sonar_device_img
+            hide deep_sea_suit_img
+            hide captains_log_img
+            hide note_img
+            hide radio_img
+            hide toy_img
+            # ============================================================
+
+            # SHOW INVENTORY
+            # ============================================================
+            $ itemCount = inventory.number_of_items - 1
+            $ xPos = 0.1
+
+            while itemCount >= 0:
+                if inventory.items[itemCount].name == "Gun":
+                    show gun_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Repair Drone":
+                    show repair_drone_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Sonar Device":
+                    show sonar_device_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Deep Sea Suit":
+                    show deep_sea_suit_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Captain\'s Log":
+                    show captains_log_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Note":
+                    show note_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Radio":
+                    show radio_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Toy":
+                    show toy_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                $ xPos += 0.125
+                $ itemCount -= 1
+            # ============================================================
             $ rations -= 5
             if enter_bridge and enter_living_quarters:
                     menu:
@@ -661,6 +836,65 @@ label fix_choice3a:
             hide quartermaster
             hide radio
             $ fix_radio = True
+            # HIDE INVENTORY
+            # ============================================================
+            hide sonar_device_img
+            hide deep_sea_suit_img
+            hide captains_log_img
+            hide note_img
+            hide radio_img
+            hide toy_img
+            # ============================================================
+
+            # SHOW INVENTORY
+            # ============================================================
+            $ itemCount = inventory.number_of_items - 1
+            $ xPos = 0.1
+
+            while itemCount >= 0:
+                if inventory.items[itemCount].name == "Gun":
+                    show gun_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Repair Drone":
+                    show repair_drone_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Sonar Device":
+                    show sonar_device_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Deep Sea Suit":
+                    show deep_sea_suit_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Captain\'s Log":
+                    show captains_log_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Note":
+                    show note_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Radio":
+                    show radio_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                if inventory.items[itemCount].name == "Toy":
+                    show toy_img:
+                        xalign xPos yalign 0.01
+                        xysize(100,100)
+
+                $ xPos += 0.125
+                $ itemCount -= 1
+            # ============================================================
             $ rations -= 5
             if enter_living_quarters and enter_biosphere:
                     menu:
@@ -816,6 +1050,65 @@ label search_rooms1:
                     if rations == 0:
                         jump rations_ending
                     $ inventory.add_item(captains_log)
+                    # HIDE INVENTORY
+                    # ============================================================
+                    hide sonar_device_img
+                    hide deep_sea_suit_img
+                    hide captains_log_img
+                    hide note_img
+                    hide radio_img
+                    hide toy_img
+                    # ============================================================
+
+                    # SHOW INVENTORY
+                    # ============================================================
+                    $ itemCount = inventory.number_of_items - 1
+                    $ xPos = 0.1
+
+                    while itemCount >= 0:
+                        if inventory.items[itemCount].name == "Gun":
+                            show gun_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Repair Drone":
+                            show repair_drone_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Sonar Device":
+                            show sonar_device_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Deep Sea Suit":
+                            show deep_sea_suit_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Captain\'s Log":
+                            show captains_log_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Note":
+                            show note_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Radio":
+                            show radio_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Toy":
+                            show toy_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        $ xPos += 0.125
+                        $ itemCount -= 1
+                    # ============================================================
                     $ captains_log = True
                     "Upon closer inspection of the contents, you learn that the true nature of this mission was to be a suicide mission, one where the crew is left in the dark of the details."
                     "The Captain is to assure control of the crew and order them to arm the bomb in the armory."
@@ -841,6 +1134,65 @@ label search_rooms1:
             menu:
                 "Take the suit":
                     $ inventory.add_item(deep_sea_suit)
+                    # HIDE INVENTORY
+                    # ============================================================
+                    hide sonar_device_img
+                    hide deep_sea_suit_img
+                    hide captains_log_img
+                    hide note_img
+                    hide radio_img
+                    hide toy_img
+                    # ============================================================
+
+                    # SHOW INVENTORY
+                    # ============================================================
+                    $ itemCount = inventory.number_of_items - 1
+                    $ xPos = 0.1
+
+                    while itemCount >= 0:
+                        if inventory.items[itemCount].name == "Gun":
+                            show gun_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Repair Drone":
+                            show repair_drone_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Sonar Device":
+                            show sonar_device_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Deep Sea Suit":
+                            show deep_sea_suit_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Captain\'s Log":
+                            show captains_log_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Note":
+                            show note_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Radio":
+                            show radio_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Toy":
+                            show toy_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        $ xPos += 0.125
+                        $ itemCount -= 1
+                    # ============================================================
                     $ deep_sea_suit = True
                     "Surely this will be more useful in your hands should you find yourself on the other side of the submersible's hull. Better safe than sorry. It takes some time to pack it away into your drone."
                     jump search_rooms1
@@ -896,6 +1248,65 @@ label search_rooms1:
             menu:
                 "Take the device":
                     $ inventory.add_item(sonar_device)
+                    # HIDE INVENTORY
+                    # ============================================================
+                    hide sonar_device_img
+                    hide deep_sea_suit_img
+                    hide captains_log_img
+                    hide note_img
+                    hide radio_img
+                    hide toy_img
+                    # ============================================================
+
+                    # SHOW INVENTORY
+                    # ============================================================
+                    $ itemCount = inventory.number_of_items - 1
+                    $ xPos = 0.1
+
+                    while itemCount >= 0:
+                        if inventory.items[itemCount].name == "Gun":
+                            show gun_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Repair Drone":
+                            show repair_drone_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Sonar Device":
+                            show sonar_device_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Deep Sea Suit":
+                            show deep_sea_suit_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Captain\'s Log":
+                            show captains_log_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Note":
+                            show note_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Radio":
+                            show radio_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        if inventory.items[itemCount].name == "Toy":
+                            show toy_img:
+                                xalign xPos yalign 0.01
+                                xysize(100,100)
+
+                        $ xPos += 0.125
+                        $ itemCount -= 1
+                    # ============================================================
                     $ sonar_device = True
                     "It glows dimly yellow, yet dormant, what use may this find you wonder? Your drone tweaks at it a bit to stay powered beyond its stationary charger and drops it into its compartment."
                     jump search_rooms1
